@@ -1,0 +1,61 @@
+{
+  "schema": "HCMC_QA_GATE1_V1",
+  "project_name": "HCMC_3D_DIGITAL_TWIN",
+  "task_id": "TILE_3D_T_E00_S00",
+  "tile_id": "T_E00_S00",
+  "ring": "RING_1",
+  "worker_id": "swaA4_7d2f",
+  "generated_at_utc": "2026-11-27T07:38:13Z",
+  "bounds_m": {
+    "x_min": -1000.0,
+    "x_max": 1000.0,
+    "z_min": -1000.0,
+    "z_max": 1000.0
+  },
+  "tier1_precommit_gate": {
+    "passed": true,
+    "glb_size_bytes": 7300044,
+    "draw_calls": 8,
+    "building_triangles": 98121,
+    "max_seam_error_m": 0.0,
+    "scatter_tree_count": 4323
+  },
+  "tier2_deep_verification": {
+    "passed": true,
+    "total_triangles": 109832,
+    "building_triangles": 98121,
+    "draw_calls": 8,
+    "has_nan_inf": false,
+    "bad_normals": 0,
+    "max_seam_diff_m": 0.0,
+    "floating_check_violations": 0,
+    "intrusion_rate_pct": 0.0,
+    "peak_elevation_y_max_m": 277.82
+  },
+  "building_summary": {
+    "total_gis_footprints": 3172,
+    "skipped_landmark_footprints": 31,
+    "batched_buildings_count": 3237,
+    "archetype_breakdown": {
+      "tube_house": 1068,
+      "shophouse": 1136,
+      "villa": 33,
+      "apartment": 344,
+      "modern_tower": 656
+    }
+  },
+  "deliverable_hashes": {
+    "T_E00_S00.glb": {
+      "size_bytes": 7300044,
+      "sha256": "ecf0c032dddf793fdd19ca72bab9e90531ad8e97ca0c99d49a911b54caa7e182"
+    },
+    "T_E00_S00_scatter_trees.bin": {
+      "size_bytes": 103768,
+      "sha256": "fb3402cc474c9608aa149546534fc04c549f15bec95ed985a6fea6b846aaf971"
+    },
+    "TILE_3D_T_E00_S00_preview.jpg": {
+      "size_bytes": 1029673,
+      "sha256": "2b1d514a7af23914dc20b9c64a0cf507c9f247abc60a3accfa1c3ee73b26f00d"
+    }
+  }
+}
