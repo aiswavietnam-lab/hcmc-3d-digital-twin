@@ -1,0 +1,67 @@
+{
+  "schema": "HCMC_QA_GATE1_V1",
+  "task_id": "TILE_3D_T_E01_S00",
+  "tile_id": "T_E01_S00",
+  "worker_id": "swaB3_c4e9",
+  "audited_at_utc": "2026-11-27T07:46:41Z",
+  "passed": true,
+  "glb_metrics": {
+    "path": "02_ASSETS_3D/ring1_tiles/band_S00/T_E01_S00.glb",
+    "size_bytes": 2739236,
+    "size_mb": 2.612,
+    "budget_max_bytes": 10485760,
+    "sha256": "6bbe26bd4ead6b9ca9a62d4f6105b5952105f353fd5673cfcffa21dabbc53664",
+    "draw_calls": 7,
+    "budget_max_draw_calls": 8,
+    "total_triangles": 35951,
+    "building_triangles": 21751,
+    "budget_max_building_triangles": 150000,
+    "has_nan_inf": false,
+    "bad_normals": 0,
+    "peak_elevation_y_m": 177.399
+  },
+  "seam_lock_gate": {
+    "grid_verts": [
+      65,
+      65
+    ],
+    "step_m": 31.25,
+    "max_seam_error_m": 0.0,
+    "tolerance_m": 0.0,
+    "edge_sha256": "ad306ea9f34dd097a8695142c2758504aea81aab46a21e14b6f10c4d904a4ba0"
+  },
+  "slope_seating_and_intrusion_gate": {
+    "min_seating_depth_m": 0.9,
+    "required_min_depth_m": 0.5,
+    "floating_violations": 0,
+    "water_and_road_intrusion_pct": 0.0,
+    "buildings_built": 662,
+    "landmarks_reserved_skipped": 0,
+    "archetype_breakdown": {
+      "tube_house": 301,
+      "shophouse": 240,
+      "villa_colonial_modern": 0,
+      "old_apartment": 59,
+      "modern_tower": 62
+    }
+  },
+  "scatter_trees_gate": {
+    "path": "02_ASSETS_3D/ring1_tiles/band_S00/T_E01_S00_scatter_trees.bin",
+    "magic": "HCMC_TR1",
+    "version": 1,
+    "instance_count": 3058,
+    "size_bytes": 73408,
+    "sha256": "a32b2bb9568b3263db34d42098b70ca8e6d3464379f96b9f6a523d894cb71e08",
+    "intrusion_rate_pct": 0.0
+  },
+  "preview_contact_sheet": {
+    "path": "04_QA_BUILDS/contact_sheets/TILE_3D_T_E01_S00_preview.jpg",
+    "resolution": [
+      1920,
+      1080
+    ],
+    "format": "JPEG_Q95",
+    "size_bytes": 874089,
+    "sha256": "70f4d3579f374862a1b599f176a9aca4357e5b529163c6ef065582b6fbd249cb"
+  }
+}

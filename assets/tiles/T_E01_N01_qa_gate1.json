@@ -1,0 +1,89 @@
+{
+  "schema": "HCMC_QA_GATE1_V1",
+  "task_id": "TILE_3D_T_E01_N01",
+  "tile_id": "T_E01_N01",
+  "worker_id": "swaA1_e584",
+  "audited_at_utc": "2026-11-27T07:25:10Z",
+  "passed": true,
+  "tier1_gate": {
+    "passed": true,
+    "glb_size_bytes": 8565480,
+    "draw_calls": 8,
+    "building_triangles": 113305,
+    "max_seam_error_m": 0.0,
+    "scatter_tree_count": 3509
+  },
+  "tier2_deep_verification": {
+    "passed": true,
+    "max_seam_diff_m": 0.0,
+    "floating_check_violations": 0,
+    "water_road_intrusion_rate_pct": 0.0,
+    "peak_elevation_msl_m": 183.38,
+    "bad_normals": 0,
+    "has_nan_inf": false
+  },
+  "mesh_breakdown": [
+    {
+      "mesh_name": "MESH_01_TERRAIN",
+      "material_name": "MAT_01_TERRAIN_SATELLITE",
+      "vertices": 4225,
+      "triangles": 8192
+    },
+    {
+      "mesh_name": "MESH_02_WATER",
+      "material_name": "MAT_02_SAIGON_RIVER_WATER",
+      "vertices": 477,
+      "triangles": 461
+    },
+    {
+      "mesh_name": "MESH_03_ROAD_METRO",
+      "material_name": "MAT_03_ROAD_ASPHALT_METRO",
+      "vertices": 15224,
+      "triangles": 10274
+    },
+    {
+      "mesh_name": "MESH_04_TUBE_HOUSE",
+      "material_name": "MAT_04_TUBE_HOUSE_TERRACOTTA_TIN",
+      "vertices": 94039,
+      "triangles": 47441
+    },
+    {
+      "mesh_name": "MESH_05_SHOPHOUSE",
+      "material_name": "MAT_05_SHOPHOUSE_COMMERCIAL",
+      "vertices": 72877,
+      "triangles": 38685
+    },
+    {
+      "mesh_name": "MESH_06_VILLA_COLONIAL",
+      "material_name": "MAT_06_VILLA_COLONIAL_CREAM",
+      "vertices": 8679,
+      "triangles": 4013
+    },
+    {
+      "mesh_name": "MESH_07_APARTMENT_CONCRETE",
+      "material_name": "MAT_07_APARTMENT_CONCRETE",
+      "vertices": 30153,
+      "triangles": 16683
+    },
+    {
+      "mesh_name": "MESH_08_MODERN_TOWER",
+      "material_name": "MAT_08_MODERN_TOWER_CURTAINWALL",
+      "vertices": 11625,
+      "triangles": 6483
+    }
+  ],
+  "species_counts": {
+    "0": 1546,
+    "1": 364,
+    "2": 1050,
+    "3": 549
+  },
+  "landmark_reserved": {
+    "id": "landmark_81",
+    "skipped_footprints": 8,
+    "anchor_xz_m": [
+      2492.0,
+      -1682.0
+    ]
+  }
+}
