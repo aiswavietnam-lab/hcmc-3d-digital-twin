@@ -1,0 +1,1083 @@
+{
+  "schema_version": "2.0.0",
+  "project_name": "HCMC_3D_DIGITAL_TWIN",
+  "updated_at_utc": "2026-11-26T17:04:38.714100+00:00",
+  "total_tasks": 38,
+  "completed_tasks": 0,
+  "tasks": [
+    {
+      "task_id": "TILE_3D_T_W01_N01",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_W01_N01",
+      "bounds_m": {
+        "x_min": -3000,
+        "x_max": -1000,
+        "z_min": -3000,
+        "z_max": -1000
+      },
+      "title": "Dựng ô đô thị 3D T_W01_N01 (2x2 km): Phú Nhuận Nam – Tân Định – Kênh Nhiêu Lộc",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_W01_N01_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_W01_N01_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_N01",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_N01/T_W01_N01.glb",
+        "02_ASSETS_3D/ring1_tiles/band_N01/T_W01_N01_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_N01/T_W01_N01_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_W01_N01_gis.json` + `T_W01_N01_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_W01_N01.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_W01_N01_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_W01_N01_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E00_N01",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E00_N01",
+      "bounds_m": {
+        "x_min": -1000,
+        "x_max": 1000,
+        "z_min": -3000,
+        "z_max": -1000
+      },
+      "title": "Dựng ô đô thị 3D T_E00_N01 (2x2 km): Bình Thạnh Tây – Thảo Cầm Viên Bắc – Thị Nghè",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E00_N01_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E00_N01_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_N01",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_N01/T_E00_N01.glb",
+        "02_ASSETS_3D/ring1_tiles/band_N01/T_E00_N01_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_N01/T_E00_N01_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E00_N01_gis.json` + `T_E00_N01_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E00_N01.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E00_N01_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E00_N01_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E01_N01",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E01_N01",
+      "bounds_m": {
+        "x_min": 1000,
+        "x_max": 3000,
+        "z_min": -3000,
+        "z_max": -1000
+      },
+      "title": "Dựng ô đô thị 3D T_E01_N01 (2x2 km): Vinhomes Central Park – Landmark 81 – Cầu Sài Gòn – Tân Cảng",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E01_N01_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E01_N01_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_N01",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_N01/T_E01_N01.glb",
+        "02_ASSETS_3D/ring1_tiles/band_N01/T_E01_N01_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_N01/T_E01_N01_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E01_N01_gis.json` + `T_E01_N01_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E01_N01.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E01_N01_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E01_N01_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E02_N01",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E02_N01",
+      "bounds_m": {
+        "x_min": 3000,
+        "x_max": 5000,
+        "z_min": -3000,
+        "z_max": -1000
+      },
+      "title": "Dựng ô đô thị 3D T_E02_N01 (2x2 km): Bán đảo Thảo Điền – Xa lộ Hà Nội – Metro Thảo Điền",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E02_N01_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E02_N01_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_N01",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_N01/T_E02_N01.glb",
+        "02_ASSETS_3D/ring1_tiles/band_N01/T_E02_N01_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_N01/T_E02_N01_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E02_N01_gis.json` + `T_E02_N01_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E02_N01.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E02_N01_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E02_N01_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E03_N01",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E03_N01",
+      "bounds_m": {
+        "x_min": 5000,
+        "x_max": 7000,
+        "z_min": -3000,
+        "z_max": -1000
+      },
+      "title": "Dựng ô đô thị 3D T_E03_N01 (2x2 km): An Phú Bắc – Rạch Chiếc Nam",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E03_N01_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E03_N01_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_N01",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_N01/T_E03_N01.glb",
+        "02_ASSETS_3D/ring1_tiles/band_N01/T_E03_N01_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_N01/T_E03_N01_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E03_N01_gis.json` + `T_E03_N01_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E03_N01.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E03_N01_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E03_N01_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_W01_S00",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_W01_S00",
+      "bounds_m": {
+        "x_min": -3000,
+        "x_max": -1000,
+        "z_min": -1000,
+        "z_max": 1000
+      },
+      "title": "Dựng ô đô thị 3D T_W01_S00 (2x2 km): Quận 3 Trung tâm – Ga Sài Gòn – Công viên Tao Đàn",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_W01_S00_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_W01_S00_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S00",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S00/T_W01_S00.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S00/T_W01_S00_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S00/T_W01_S00_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_W01_S00_gis.json` + `T_W01_S00_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_W01_S00.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_W01_S00_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_W01_S00_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E00_S00",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E00_S00",
+      "bounds_m": {
+        "x_min": -1000,
+        "x_max": 1000,
+        "z_min": -1000,
+        "z_max": 1000
+      },
+      "title": "Dựng ô đô thị 3D T_E00_S00 (2x2 km): Lõi Lịch sử Quận 1 – Dinh Độc Lập – Nhà thờ Đức Bà – Nguyễn Huệ – Bến Thành – Bitexco",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E00_S00_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E00_S00_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S00",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S00/T_E00_S00.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S00/T_E00_S00_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S00/T_E00_S00_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E00_S00_gis.json` + `T_E00_S00_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E00_S00.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E00_S00_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E00_S00_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E01_S00",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E01_S00",
+      "bounds_m": {
+        "x_min": 1000,
+        "x_max": 3000,
+        "z_min": -1000,
+        "z_max": 1000
+      },
+      "title": "Dựng ô đô thị 3D T_E01_S00 (2x2 km): Ba Son – Cầu Ba Son – Quảng trường Trung tâm Thủ Thiêm",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E01_S00_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E01_S00_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S00",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S00/T_E01_S00.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S00/T_E01_S00_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S00/T_E01_S00_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E01_S00_gis.json` + `T_E01_S00_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E01_S00.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E01_S00_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E01_S00_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E02_S00",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E02_S00",
+      "bounds_m": {
+        "x_min": 3000,
+        "x_max": 5000,
+        "z_min": -1000,
+        "z_max": 1000
+      },
+      "title": "Dựng ô đô thị 3D T_E02_S00 (2x2 km): Đại lộ Mai Chí Thọ – Khu đô thị Thủ Thiêm Đông",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E02_S00_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E02_S00_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S00",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S00/T_E02_S00.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S00/T_E02_S00_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S00/T_E02_S00_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E02_S00_gis.json` + `T_E02_S00_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E02_S00.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E02_S00_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E02_S00_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E03_S00",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E03_S00",
+      "bounds_m": {
+        "x_min": 5000,
+        "x_max": 7000,
+        "z_min": -1000,
+        "z_max": 1000
+      },
+      "title": "Dựng ô đô thị 3D T_E03_S00 (2x2 km): An Phú Nam – Nút giao Mai Chí Thọ / Đồng Văn Cống",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E03_S00_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E03_S00_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S00",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S00/T_E03_S00.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S00/T_E03_S00_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S00/T_E03_S00_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E03_S00_gis.json` + `T_E03_S00_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E03_S00.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E03_S00_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E03_S00_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_W01_S01",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_W01_S01",
+      "bounds_m": {
+        "x_min": -3000,
+        "x_max": -1000,
+        "z_min": 1000,
+        "z_max": 3000
+      },
+      "title": "Dựng ô đô thị 3D T_W01_S01 (2x2 km): Quận 5 Đông – Nguyễn Văn Cừ – Kênh Tàu Hủ",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_W01_S01_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_W01_S01_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S01",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S01/T_W01_S01.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S01/T_W01_S01_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S01/T_W01_S01_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_W01_S01_gis.json` + `T_W01_S01_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_W01_S01.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_W01_S01_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_W01_S01_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E00_S01",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E00_S01",
+      "bounds_m": {
+        "x_min": -1000,
+        "x_max": 1000,
+        "z_min": 1000,
+        "z_max": 3000
+      },
+      "title": "Dựng ô đô thị 3D T_E00_S01 (2x2 km): Quận 4 – Bến Nhà Rồng – Cảng Khánh Hội – Hầm Thủ Thiêm",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E00_S01_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E00_S01_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S01",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S01/T_E00_S01.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S01/T_E00_S01_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S01/T_E00_S01_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E00_S01_gis.json` + `T_E00_S01_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E00_S01.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E00_S01_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E00_S01_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E01_S01",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E01_S01",
+      "bounds_m": {
+        "x_min": 1000,
+        "x_max": 3000,
+        "z_min": 1000,
+        "z_max": 3000
+      },
+      "title": "Dựng ô đô thị 3D T_E01_S01 (2x2 km): Khu đô thị Sala Thủ Thiêm – Lâm viên Sinh thái Châu thổ",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E01_S01_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E01_S01_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S01",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S01/T_E01_S01.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S01/T_E01_S01_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S01/T_E01_S01_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E01_S01_gis.json` + `T_E01_S01_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E01_S01.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E01_S01_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E01_S01_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E02_S01",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E02_S01",
+      "bounds_m": {
+        "x_min": 3000,
+        "x_max": 5000,
+        "z_min": 1000,
+        "z_max": 3000
+      },
+      "title": "Dựng ô đô thị 3D T_E02_S01 (2x2 km): Đảo Kim Cương – Thạnh Mỹ Lợi Tây – Ven sông Sài Gòn",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E02_S01_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E02_S01_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S01",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S01/T_E02_S01.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S01/T_E02_S01_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S01/T_E02_S01_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E02_S01_gis.json` + `T_E02_S01_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E02_S01.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E02_S01_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E02_S01_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E03_S01",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E03_S01",
+      "bounds_m": {
+        "x_min": 5000,
+        "x_max": 7000,
+        "z_min": 1000,
+        "z_max": 3000
+      },
+      "title": "Dựng ô đô thị 3D T_E03_S01 (2x2 km): Trung tâm Hành chính TP. Thủ Đức – Thạnh Mỹ Lợi Đông",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E03_S01_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E03_S01_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S01",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S01/T_E03_S01.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S01/T_E03_S01_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S01/T_E03_S01_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E03_S01_gis.json` + `T_E03_S01_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E03_S01.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E03_S01_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E03_S01_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_W01_S02",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_W01_S02",
+      "bounds_m": {
+        "x_min": -3000,
+        "x_max": -1000,
+        "z_min": 3000,
+        "z_max": 5000
+      },
+      "title": "Dựng ô đô thị 3D T_W01_S02 (2x2 km): Quận 8 Đông – Cầu Chữ Y – Kênh Đôi",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_W01_S02_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_W01_S02_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S02",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S02/T_W01_S02.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S02/T_W01_S02_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S02/T_W01_S02_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_W01_S02_gis.json` + `T_W01_S02_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_W01_S02.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_W01_S02_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_W01_S02_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E00_S02",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E00_S02",
+      "bounds_m": {
+        "x_min": -1000,
+        "x_max": 1000,
+        "z_min": 3000,
+        "z_max": 5000
+      },
+      "title": "Dựng ô đô thị 3D T_E00_S02 (2x2 km): Kênh Tẻ – Bắc Quận 7 (Tân Hưng – Tân Kiểng)",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E00_S02_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E00_S02_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S02",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S02/T_E00_S02.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S02/T_E00_S02_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S02/T_E00_S02_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E00_S02_gis.json` + `T_E00_S02_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E00_S02.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E00_S02_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E00_S02_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E01_S02",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E01_S02",
+      "bounds_m": {
+        "x_min": 1000,
+        "x_max": 3000,
+        "z_min": 3000,
+        "z_max": 5000
+      },
+      "title": "Dựng ô đô thị 3D T_E01_S02 (2x2 km): Tân Quy – Khu chế xuất Tân Thuận Tây",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E01_S02_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E01_S02_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S02",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S02/T_E01_S02.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S02/T_E01_S02_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S02/T_E01_S02_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E01_S02_gis.json` + `T_E01_S02_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E01_S02.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E01_S02_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E01_S02_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E02_S02",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E02_S02",
+      "bounds_m": {
+        "x_min": 3000,
+        "x_max": 5000,
+        "z_min": 3000,
+        "z_max": 5000
+      },
+      "title": "Dựng ô đô thị 3D T_E02_S02 (2x2 km): KCX Tân Thuận Đông – Bến cảng Tân Thuận – Đầu cầu Phú Mỹ Tây",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E02_S02_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E02_S02_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S02",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S02/T_E02_S02.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S02/T_E02_S02_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S02/T_E02_S02_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E02_S02_gis.json` + `T_E02_S02_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E02_S02.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E02_S02_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E02_S02_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E03_S02",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E03_S02",
+      "bounds_m": {
+        "x_min": 5000,
+        "x_max": 7000,
+        "z_min": 3000,
+        "z_max": 5000
+      },
+      "title": "Dựng ô đô thị 3D T_E03_S02 (2x2 km): Cầu Phú Mỹ – Sông Sài Gòn hạ lưu – Cát Lái Tây",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E03_S02_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E03_S02_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S02",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S02/T_E03_S02.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S02/T_E03_S02_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S02/T_E03_S02_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E03_S02_gis.json` + `T_E03_S02_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E03_S02.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E03_S02_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E03_S02_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_W01_S03",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_W01_S03",
+      "bounds_m": {
+        "x_min": -3000,
+        "x_max": -1000,
+        "z_min": 5000,
+        "z_max": 7000
+      },
+      "title": "Dựng ô đô thị 3D T_W01_S03 (2x2 km): Đại lộ Nguyễn Văn Linh Tây – Trung Sơn",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_W01_S03_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_W01_S03_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S03",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S03/T_W01_S03.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S03/T_W01_S03_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S03/T_W01_S03_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_W01_S03_gis.json` + `T_W01_S03_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_W01_S03.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_W01_S03_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_W01_S03_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E00_S03",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E00_S03",
+      "bounds_m": {
+        "x_min": -1000,
+        "x_max": 1000,
+        "z_min": 5000,
+        "z_max": 7000
+      },
+      "title": "Dựng ô đô thị 3D T_E00_S03 (2x2 km): Đại học RMIT – Khu đô thị Him Lam Quận 7",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E00_S03_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E00_S03_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S03",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S03/T_E00_S03.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S03/T_E00_S03_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S03/T_E00_S03_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E00_S03_gis.json` + `T_E00_S03_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E00_S03.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E00_S03_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E00_S03_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E01_S03",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E01_S03",
+      "bounds_m": {
+        "x_min": 1000,
+        "x_max": 3000,
+        "z_min": 5000,
+        "z_max": 7000
+      },
+      "title": "Dựng ô đô thị 3D T_E01_S03 (2x2 km): Phú Mỹ Hưng – Hồ Bán Nguyệt – Cầu Ánh Sao – Crescent Mall",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E01_S03_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E01_S03_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S03",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S03/T_E01_S03.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S03/T_E01_S03_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S03/T_E01_S03_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E01_S03_gis.json` + `T_E01_S03_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E01_S03.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E01_S03_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E01_S03_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E02_S03",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E02_S03",
+      "bounds_m": {
+        "x_min": 3000,
+        "x_max": 5000,
+        "z_min": 5000,
+        "z_max": 7000
+      },
+      "title": "Dựng ô đô thị 3D T_E02_S03 (2x2 km): Phú Mỹ Hưng Nam – Trung tâm Triển lãm SECC – Tân Phú Q7",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E02_S03_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E02_S03_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S03",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S03/T_E02_S03.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S03/T_E02_S03_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S03/T_E02_S03_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E02_S03_gis.json` + `T_E02_S03_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E02_S03.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E02_S03_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E02_S03_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "TILE_3D_T_E03_S03",
+      "lane": "TILE_3D",
+      "ring": "RING_1",
+      "tile_id": "T_E03_S03",
+      "bounds_m": {
+        "x_min": 5000,
+        "x_max": 7000,
+        "z_min": 5000,
+        "z_max": 7000
+      },
+      "title": "Dựng ô đô thị 3D T_E03_S03 (2x2 km): Phú Thuận – Mũi Đèn Đỏ – Hợp lưu sông Sài Gòn & Nhà Bè",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "input_gis_package": "01_DATA_REFS/gis_tiles/T_E03_S03_gis.json",
+      "input_satellite_jpg": "01_DATA_REFS/gis_tiles/T_E03_S03_satellite.jpg",
+      "allowed_write_paths": [
+        "02_ASSETS_3D/ring1_tiles/band_S03",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/ring1_tiles/band_S03/T_E03_S03.glb",
+        "02_ASSETS_3D/ring1_tiles/band_S03/T_E03_S03_scatter_trees.bin",
+        "02_ASSETS_3D/ring1_tiles/band_S03/T_E03_S03_qa_gate1.json"
+      ],
+      "brief": "Đọc gói dữ liệu GIS thật `T_E03_S03_gis.json` + `T_E03_S03_satellite.jpg` và `GRID_CONTRACT.json`. Sinh ĐÚNG 01 file `T_E03_S03.glb` (<=10MB, <=150.000 tris, <=8 Draw Calls, khớp biên DEM 0.000m trên lưới 65x65 bước 31.25m, nhận diện hình thái kiến trúc Sài Gòn: nhà ống mái tôn/lệch tầng, shophouse, biệt thự Pháp/Thảo Điền/PMH, chung cư cũ, tháp kính văn phòng, KCN; chân công trình cắm sâu >=0.5m dưới mặt địa hình, 0% lấn sông Sài Gòn/kênh rạch/lòng đường) kèm 01 file nhị phân `T_E03_S03_scatter_trees.bin` (Poisson Disk, ma trận float32 x,y,z,rot_y,scale,species_id) và `T_E03_S03_qa_gate1.json`.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "LANDMARK_3D_01_HERITAGE_Q1",
+      "lane": "LANDMARK_3D",
+      "ring": "RING_1",
+      "title": "Cụm Di sản Kiến trúc Lõi Quận 1 (Dinh Độc Lập, Nhà thờ Đức Bà, Bưu điện TP, UBND TP, Nhà hát TP, Chợ Bến Thành, Bến Nhà Rồng)",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "allowed_write_paths": [
+        "02_ASSETS_3D/landmarks/heritage_q1",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/landmarks/heritage_q1/dinh_doc_lap.glb",
+        "02_ASSETS_3D/landmarks/heritage_q1/nha_tho_duc_ba.glb",
+        "02_ASSETS_3D/landmarks/heritage_q1/buu_dien_trung_tam.glb",
+        "02_ASSETS_3D/landmarks/heritage_q1/ubnd_tphcm.glb",
+        "02_ASSETS_3D/landmarks/heritage_q1/nha_hat_thanh_pho.glb",
+        "02_ASSETS_3D/landmarks/heritage_q1/cho_ben_thanh.glb",
+        "02_ASSETS_3D/landmarks/heritage_q1/ben_nha_rong.glb",
+        "02_ASSETS_3D/landmarks/heritage_q1/manifest_heritage_q1.json"
+      ],
+      "brief": "Dựng mô hình 3D thủ tục chi tiết cao (.glb chuẩn tỷ lệ thực 1:1, +Y up, Pivot đáy tại tâm công trình kèm tọa độ neo chuẩn theo GRID_CONTRACT.json) cho 7 công trình di sản biểu tượng Quận 1/Quận 4: Dinh Độc Lập (lam chắn nắng đặc trưng + đài phun nước), Nhà thờ Đức Bà (2 tháp chuông nhọn 57.6m + cửa sổ hoa hồng), Bưu điện Trung tâm (mái vòm vàng + đồng hồ), UBND TP, Nhà hát TP, Chợ Bến Thành (tháp đồng hồ 4 mặt + mái ngói bậc), Bến Nhà Rồng.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "LANDMARK_3D_02_CBD_TOWERS",
+      "lane": "LANDMARK_3D",
+      "ring": "RING_1",
+      "title": "Cụm Cao ốc Biểu tượng Quận 1 & Ba Son (Bitexco Financial Tower, Vietcombank Tower, Saigon Marina IFC, Saigon Centre, Times Square)",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "allowed_write_paths": [
+        "02_ASSETS_3D/landmarks/cbd_skyscrapers",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/landmarks/cbd_skyscrapers/bitexco_financial_tower.glb",
+        "02_ASSETS_3D/landmarks/cbd_skyscrapers/vietcombank_tower.glb",
+        "02_ASSETS_3D/landmarks/cbd_skyscrapers/saigon_marina_ifc.glb",
+        "02_ASSETS_3D/landmarks/cbd_skyscrapers/saigon_centre_takashimaya.glb",
+        "02_ASSETS_3D/landmarks/cbd_skyscrapers/times_square_nguyen_hue.glb",
+        "02_ASSETS_3D/landmarks/cbd_skyscrapers/manifest_cbd_skyscrapers.json"
+      ],
+      "brief": "Dựng mô hình 3D thủ tục chuẩn tỷ lệ thực 1:1 cho cụm cao ốc tài chính Quận 1 & Ba Son: Bitexco Financial Tower (262.5m, búp sen kính cong + sân đỗ trực thăng tầng 50 vươn ra 22m), Vietcombank Tower (206m), Saigon Marina IFC Ba Son (55 tầng ~240m mặt kính LED), Saigon Centre, Times Square Nguyễn Huệ. Có vật liệu kính PBR + kênh emissive cửa sổ ban đêm.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "LANDMARK_3D_03_LANDMARK81_VINHOMES",
+      "lane": "LANDMARK_3D",
+      "ring": "RING_1",
+      "title": "Quần thể Landmark 81 (461.2m) & Tổ hợp Vinhomes Central Park ven sông Sài Gòn",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "allowed_write_paths": [
+        "02_ASSETS_3D/landmarks/vinhomes_binhthanh",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/landmarks/vinhomes_binhthanh/landmark_81.glb",
+        "02_ASSETS_3D/landmarks/vinhomes_binhthanh/vinhomes_central_park_cluster.glb",
+        "02_ASSETS_3D/landmarks/vinhomes_binhthanh/manifest_vinhomes.json"
+      ],
+      "brief": "Dựng mô hình 3D chi tiết cao tòa tháp cao nhất Việt Nam Landmark 81 (461.2m, cấu trúc 25 ống bó tre vuông 5x5 giật cấp chuẩn cao độ thực tế + khối đế TTTM + đài quan sát SkyView + Spire đỉnh tháp phát sáng) và cụm tháp tiêu biểu + cầu vượt bộ hành Công viên Vinhomes Central Park tại ô T_E01_N01.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "LANDMARK_3D_04_ICONIC_BRIDGES",
+      "lane": "LANDMARK_3D",
+      "ring": "RING_1",
+      "title": "Cụm Cầu Biểu tượng vượt Sông Sài Gòn & Phú Mỹ Hưng (Cầu Ba Son, Cầu Phú Mỹ, Cầu Thủ Thiêm 1, Cầu Móng, Cầu Ánh Sao)",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "allowed_write_paths": [
+        "02_ASSETS_3D/landmarks/bridges",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/landmarks/bridges/cau_ba_son.glb",
+        "02_ASSETS_3D/landmarks/bridges/cau_phu_my.glb",
+        "02_ASSETS_3D/landmarks/bridges/cau_anh_sao.glb",
+        "02_ASSETS_3D/landmarks/bridges/cau_mong_heritage.glb",
+        "02_ASSETS_3D/landmarks/bridges/manifest_bridges.json"
+      ],
+      "brief": "Dựng mô hình 3D chuẩn tọa độ nhịp thực tế vượt sông cho Cầu Ba Son (trụ tháp vòm nghiêng hình đầu rồng 113m + hệ dây văng không đối xứng nối Quận 1 sang Thủ Thiêm), Cầu Phú Mỹ (dây văng 2 trụ tháp chữ H cao 145m, tĩnh không thông thuyền 45m nối Quận 7 – TP. Thủ Đức), Cầu Móng xanh ngọc lịch sử vượt kênh Bến Nghé, và Cầu Ánh Sao bộ hành cong tại Hồ Bán Nguyệt Phú Mỹ Hưng.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "LANDMARK_3D_05_METRO_LINE1_THUTHIEM",
+      "lane": "LANDMARK_3D",
+      "ring": "RING_1",
+      "title": "Hạ tầng Tuyến Metro số 1 (Bến Thành – Thảo Điền) & Công trình điểm nhấn Thủ Thiêm",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "allowed_write_paths": [
+        "02_ASSETS_3D/landmarks/metro_thuthiem",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/landmarks/metro_thuthiem/ga_ben_thanh_skylight.glb",
+        "02_ASSETS_3D/landmarks/metro_thuthiem/metro_line1_elevated_stations_viaduct.glb",
+        "02_ASSETS_3D/landmarks/metro_thuthiem/thuthiem_exhibition_and_tower.glb",
+        "02_ASSETS_3D/landmarks/metro_thuthiem/manifest_metro_thuthiem.json"
+      ],
+      "brief": "Dựng mô hình 3D Giếng trời Hoa Sen biểu tượng Ga ngầm Bến Thành (đường kính 21.6m cao 6m bằng kính & nhôm tổ ong), cụm Ga trên cao Văn Thánh – Tân Cảng – Thảo Điền (mái lượn sóng trắng đặc trưng) + mẫu dầm cầu cạn chữ U tuyến Metro số 1, cùng Trung tâm Triển lãm Quy hoạch & Tháp điểm nhấn Khu đô thị mới Thủ Thiêm.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "LANDMARK_3D_06_PMH_TANSONNHAT_HUB",
+      "lane": "LANDMARK_3D",
+      "ring": "RING_1",
+      "title": "Tổ hợp Phú Mỹ Hưng (Crescent Mall – SECC) & Cảng Hàng không Quốc tế Tân Sơn Nhất (Nhà ga T1/T2/T3 neo chuẩn Vành đai 2)",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "allowed_write_paths": [
+        "02_ASSETS_3D/landmarks/south_and_aviation",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/landmarks/south_and_aviation/crescent_mall_secc_pmh.glb",
+        "02_ASSETS_3D/landmarks/south_and_aviation/tan_son_nhat_terminals_t1_t2_t3.glb",
+        "02_ASSETS_3D/landmarks/south_and_aviation/manifest_south_aviation.json"
+      ],
+      "brief": "Dựng mô hình 3D tổ hợp thương mại vòng cung Crescent Mall & Trung tâm Hội chợ Triển lãm SECC tại Phú Mỹ Hưng (ô T_E01_S03, T_E02_S03), đồng thời dựng trước cụm Nhà ga Quốc nội T1, Quốc tế T2 và Nhà ga T3 mái cong mới + Đài kiểm soát không lưu Sân bay Tân Sơn Nhất đúng tọa độ GRID_CONTRACT.json để sẵn sàng ghép ngay khi mở Vành đai 2.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "VIEWER_01_THREEJS_STREAMING_ENGINE",
+      "lane": "VIEWER_AND_BRIDGE",
+      "ring": "RING_1",
+      "title": "Trình xem Bản sao số TP.HCM Three.js r128 (Streaming vành đai ô, VRAM Governor, Instanced Scatter & Server API)",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "allowed_write_paths": [
+        "03_SOURCE_CODE/web_viewer",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "03_SOURCE_CODE/web_viewer/server.js",
+        "03_SOURCE_CODE/web_viewer/index.html",
+        "03_SOURCE_CODE/web_viewer/viewer_core.js",
+        "03_SOURCE_CODE/web_viewer/tile_streamer.js",
+        "03_SOURCE_CODE/web_viewer/scatter_instancer.js",
+        "03_SOURCE_CODE/web_viewer/styles.css"
+      ],
+      "brief": "Xây dựng máy chủ `server.js` (Node.js thuần không cần npm nặng, hỗ trợ `/api/world-index?refresh=1`, `/api/qa-summary`, gzip, ETag, Range, tự động khử trùng lặp file `(1)`,`(2)` theo SHA-256) và lõi trình xem `Three.js r128` stream động các ô `.glb` + công trình `LANDMARK_3D` theo khoảng cách & frustum từ camera (tối đa 6 lượt tải đồng thời, kiểm soát trần bộ nhớ VRAM, giữ prototype cây InstancedMesh dùng chung khi thu hồi ô xa, đọc nhị phân `scatter_trees.bin`, hỗ trợ chế độ bay quy hoạch & đi bộ mặt đất DEM + 1.70m).",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "VIEWER_02_ATMOSPHERE_LIGHTING_HUD",
+      "lane": "VIEWER_AND_BRIDGE",
+      "ring": "RING_1",
+      "title": "Module 4 Chế độ Ánh sáng Sài Gòn (Sáng / Ngày / Hoàng hôn / Đêm lên đèn) & Bộ công cụ Quy hoạch HUD",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "allowed_write_paths": [
+        "03_SOURCE_CODE/web_viewer_atmosphere",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "03_SOURCE_CODE/web_viewer_atmosphere/atmosphere_controller.js",
+        "03_SOURCE_CODE/web_viewer_atmosphere/night_lights_shader.js",
+        "03_SOURCE_CODE/web_viewer_atmosphere/planning_hud.js",
+        "03_SOURCE_CODE/web_viewer_atmosphere/camera_presets_hcmc.json"
+      ],
+      "brief": "Phát triển module cắm thẳng (ES Module / Global plugin) vào `web_viewer`: 4 chế độ khí quyển & chiếu sáng chuẩn vĩ độ TP.HCM 10.78N (1. Sáng sớm sương nhẹ trên sông Sài Gòn; 2. Ban ngày nắng nhiệt đới Studio; 3. Hoàng hôn phản xạ mặt sông Sài Gòn; 4. Ban đêm bật đèn đường dọc highway, cửa sổ phát sáng cao ốc, đèn LED Cầu Ba Son & Landmark 81), kèm HUD bật/tắt lớp GIS, nhảy nhanh tới 15 địa danh TP.HCM, hiển thị tọa độ Lat/Lon <-> UTM <-> Local XYZ và chụp ảnh xuất bản JPEG 1920x1080 Q95.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "BRIDGE_01_BLENDER5_AND_SKETCHUP",
+      "lane": "VIEWER_AND_BRIDGE",
+      "ring": "RING_1",
+      "title": "Bộ công cụ Cầu nối PC Local `extract_hcmc_region_to_blender5.py` (Xuất vùng Lat/Lon + Bán kính sang Blender 5.0 Geometry Nodes & SketchUp/AI Render)",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "allowed_write_paths": [
+        "03_SOURCE_CODE/blender5_bridge",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "03_SOURCE_CODE/blender5_bridge/extract_hcmc_region_to_blender5.py",
+        "03_SOURCE_CODE/blender5_bridge/blender5_geonodes_scatter.py",
+        "03_SOURCE_CODE/blender5_bridge/export_sketchup_and_controlnet.py",
+        "03_SOURCE_CODE/blender5_bridge/README_BLENDER5_PIPELINE.md"
+      ],
+      "brief": "Viết bộ công cụ Python chạy vừa ở chế độ CLI độc lập (cắt/ghép `.glb` & `scatter_trees.bin` thuần Python không cần mở Blender) vừa chạy trực tiếp bằng `blender --background --python extract_hcmc_region_to_blender5.py -- --lat 10.7798 --lon 106.6990 --radius-km 1.5 --out region.blend` trên Blender 5.0 PC Local: tự động quy đổi tọa độ theo `GRID_CONTRACT.json`, nạp đúng các ô `.glb` và công trình `LANDMARK_3D` trong bán kính, cắt gọn theo ranh giới vùng quan tâm, tạo Point Cloud + `Geometry Nodes` scatter cây xanh tốc độ cao trong Blender 5.0, tổ chức Collection chuẩn quy hoạch (`01_TERRAIN_WATER`, `02_ROADS_METRO`, `03_BUILDINGS`, `04_LANDMARKS`, `05_TREES_GEONODES`, `06_AI_RENDER_CAMERAS`), kèm script xuất `.glb`/`.obj` sạch sang SketchUp và xuất pass Depth/Mist/Normal/Clay cho AI Render.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "ARCHETYPE_SAIGON_01_TUBE_AND_ALLEY",
+      "lane": "ARCHETYPE_SAIGON",
+      "ring": "RING_1",
+      "title": "Bộ Hình thái Nhà ống Sài Gòn (Mặt phố, Hẻm lệch tầng, Sân thượng bồn nước, Lam chắn nắng & Atlas UV)",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "allowed_write_paths": [
+        "02_ASSETS_3D/saigon_archetypes/tube_and_alley",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/saigon_archetypes/tube_and_alley/saigon_tube_houses_kit.glb",
+        "02_ASSETS_3D/saigon_archetypes/tube_and_alley/saigon_facade_atlas.jpg",
+        "02_ASSETS_3D/saigon_archetypes/tube_and_alley/tube_archetype_rules.json"
+      ],
+      "brief": "Xây dựng bộ 12 biến thể mô hình chuẩn `.glb` + quy tắc tham số hóa nhà ống đặc trưng Sài Gòn (bề rộng 3.2m–5.0m, lệch tầng, tum mái tôn xanh/đỏ, chuồng cọp/ban công, bồn nước Inox/tấm pin mặt trời trên mái, lam bê tông chắn nắng) và texture atlas mặt đứng JPEG Q95 dùng chung cho toàn bộ các ô đô thị và Blender 5.0.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "ARCHETYPE_SAIGON_02_SHOPHOUSE_VILLA",
+      "lane": "ARCHETYPE_SAIGON",
+      "ring": "RING_1",
+      "title": "Bộ Hình thái Shophouse Thương mại, Chung cư cũ & Biệt thự Pháp / Thảo Điền / Phú Mỹ Hưng",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "allowed_write_paths": [
+        "02_ASSETS_3D/saigon_archetypes/shophouse_and_villa",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/saigon_archetypes/shophouse_and_villa/saigon_shophouse_villa_kit.glb",
+        "02_ASSETS_3D/saigon_archetypes/shophouse_and_villa/shophouse_villa_rules.json"
+      ],
+      "brief": "Dựng bộ module `.glb` chuẩn tỷ lệ 1:1 cho Shophouse đại lộ (mái hiên che mưa vỉa hè, bảng hiệu tầng trệt), Chung cư cũ Sài Gòn (hành lang bên, lô gia lam gió) và Biệt thự Pháp cổ mái ngói đỏ Quận 3 / Biệt thự sân vườn hiện đại Thảo Điền – Phú Mỹ Hưng.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "ARCHETYPE_SAIGON_03_FLYOVER_CANAL_METRO",
+      "lane": "ARCHETYPE_SAIGON",
+      "ring": "RING_1",
+      "title": "Bộ Module Hạ tầng Đô thị Sài Gòn (Cầu vượt thép/bê tông, Bờ kè kênh Nhiêu Lộc – Tàu Hủ & Cầu cạn Metro)",
+      "status": "pending",
+      "priority": 2,
+      "depends_on": [],
+      "allowed_write_paths": [
+        "02_ASSETS_3D/saigon_archetypes/flyover_canal_metro",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/saigon_archetypes/flyover_canal_metro/saigon_infra_modules.glb",
+        "02_ASSETS_3D/saigon_archetypes/flyover_canal_metro/infra_spline_spec.json"
+      ],
+      "brief": "Dựng các đốt module lặp dọc spline (`.glb` + spec JSON) cho: kè bê tông & lan can sắt dọc kênh Nhiêu Lộc – Thị Nghè / Tàu Hủ – Bến Nghé, dầm & trụ cầu vượt nút giao thông TP.HCM, dầm chữ U & trụ đơn tuyến Metro số 1 và cột đèn đường cao áp chiếu sáng ban đêm.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    },
+    {
+      "task_id": "ARCHETYPE_SAIGON_04_TREES_SCATTER_KIT",
+      "lane": "ARCHETYPE_SAIGON",
+      "ring": "RING_1",
+      "title": "Bộ Prototype 4 Loài Cây Xanh Nhiệt Đới Sài Gòn (InstancedMesh Web Viewer & Blender 5.0 Geometry Nodes)",
+      "status": "pending",
+      "priority": 1,
+      "depends_on": [],
+      "allowed_write_paths": [
+        "02_ASSETS_3D/saigon_archetypes/tropical_trees",
+        "04_QA_BUILDS/contact_sheets"
+      ],
+      "deliverables": [
+        "02_ASSETS_3D/saigon_archetypes/tropical_trees/saigon_trees_lod_prototypes.glb",
+        "02_ASSETS_3D/saigon_archetypes/tropical_trees/scatter_species_spec.json"
+      ],
+      "brief": "Dựng bộ prototype cây xanh Low-Poly PBR (LoD0/LoD1, mỗi cây <= 180 tris, Pivot gốc `(0,0,0)`) khớp đúng 4 `species_id = 0..3` của file `scatter_trees.bin` trong `GRID_CONTRACT.json`: (0) Sao đen / Dầu rái cổ thụ Quận 1-3; (1) Me tây / Phượng vĩ vỉa hè; (2) Cọ dầu / Chà là Vinhomes – Thủ Thiêm – PMH; (3) Bần / Đước rừng ngập nước ven sông Sài Gòn.",
+      "approved_stop": false,
+      "orchestrator_note": "",
+      "version": 0
+    }
+  ]
+}
