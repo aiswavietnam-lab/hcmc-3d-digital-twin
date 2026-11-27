@@ -1,0 +1,110 @@
+{
+  "schema": "HCMC_QA_GATE1_V1",
+  "task_id": "TILE_3D_T_W01_S00",
+  "tile_id": "T_W01_S00",
+  "ring": "RING_1",
+  "band": "band_S00",
+  "worker_id": "swaB1_8f3d",
+  "bounds_m": {
+    "x_min": -3000.0,
+    "x_max": -1000.0,
+    "z_min": -1000.0,
+    "z_max": 1000.0
+  },
+  "passed": true,
+  "tier1_gate": {
+    "passed": true,
+    "glb_size_bytes": 6026776,
+    "draw_calls": 8,
+    "building_triangles": 73204,
+    "max_seam_error_m": 0.0,
+    "scatter_tree_count": 3837
+  },
+  "tier2_deep_audit": {
+    "passed": true,
+    "glb_size_bytes": 6026776,
+    "glb_size_mb": 5.7476,
+    "glb_sha256": "278e3d48b0b1778b13646cbf976f2c0965ef58a51d472f7169307275377eacb4",
+    "draw_calls": 8,
+    "total_triangles": 88445,
+    "building_triangles": 73204,
+    "has_nan_inf": false,
+    "bad_normals": 0,
+    "max_seam_diff_m": 0.0,
+    "floating_building_violations": 0,
+    "min_slope_seating_depth_m": 0.85,
+    "water_road_intrusion_rate_pct": 0.0,
+    "peak_elevation_msl_m": 153.096,
+    "errors": []
+  },
+  "mesh_breakdown": [
+    {
+      "mesh_name": "MESH_01_TERRAIN",
+      "material": "MAT_01_TERRAIN_SATELLITE",
+      "vertices": 4225,
+      "triangles": 8192
+    },
+    {
+      "mesh_name": "MESH_02_WATER",
+      "material": "MAT_02_SAIGON_RIVER_WATER",
+      "vertices": 129,
+      "triangles": 125
+    },
+    {
+      "mesh_name": "MESH_03_ROAD_METRO",
+      "material": "MAT_03_ROAD_ASPHALT_METRO",
+      "vertices": 7986,
+      "triangles": 6924
+    },
+    {
+      "mesh_name": "MESH_04_TUBE_HOUSE",
+      "material": "MAT_04_TUBE_HOUSE_TERRACOTTA_TIN",
+      "vertices": 23610,
+      "triangles": 11812
+    },
+    {
+      "mesh_name": "MESH_05_SHOPHOUSE",
+      "material": "MAT_05_SHOPHOUSE_COMMERCIAL",
+      "vertices": 36825,
+      "triangles": 19119
+    },
+    {
+      "mesh_name": "MESH_06_VILLA_COLONIAL",
+      "material": "MAT_06_VILLA_COLONIAL_CREAM",
+      "vertices": 2401,
+      "triangles": 1029
+    },
+    {
+      "mesh_name": "MESH_07_APARTMENT_CONCRETE",
+      "material": "MAT_07_APARTMENT_CONCRETE",
+      "vertices": 41191,
+      "triangles": 22847
+    },
+    {
+      "mesh_name": "MESH_08_MODERN_TOWER",
+      "material": "MAT_08_MODERN_TOWER_CURTAINWALL",
+      "vertices": 32745,
+      "triangles": 18397
+    }
+  ],
+  "building_archetype_counts": {
+    "tube_house": 1177,
+    "shophouse": 1321,
+    "villa_colonial_modern": 76,
+    "old_apartment": 809,
+    "modern_tower": 549
+  },
+  "scatter_trees": {
+    "magic": "HCMC_TR1",
+    "version": 1,
+    "instance_count": 3837,
+    "size_bytes": 92104,
+    "sha256": "fc846b83b72b12e657436d7e5d0b1e0f51d42d7df8cca35dc59c92c7fb75aef4",
+    "species_breakdown": {
+      "0": 835,
+      "1": 2520,
+      "2": 472,
+      "3": 10
+    }
+  }
+}
