@@ -1,114 +1,109 @@
 {
-  "schema": "HCMC_TIER1_QA_GATE_V1",
+  "schema": "HCMC_QA_GATE1_V1",
+  "project_name": "HCMC_3D_DIGITAL_TWIN",
   "task_id": "TILE_3D_T_E00_S01",
   "tile_id": "T_E00_S01",
-  "worker_id": "swaB2_7d4a",
-  "verified_at_utc": "2026-11-27T07:58:43Z",
-  "passed": true,
+  "worker_id": "swaA2_c81f",
+  "generated_at_utc": "2026-11-27T11:24:18Z",
+  "bounds_m": {
+    "x_min": -1000,
+    "x_max": 1000,
+    "z_min": 1000,
+    "z_max": 3000
+  },
   "tier1_precommit_gate": {
     "passed": true,
-    "glb_size_bytes": 7048880,
+    "glb_size_bytes": 6280444,
     "draw_calls": 8,
-    "building_triangles": 112503,
+    "building_triangles": 97538,
     "max_seam_error_m": 0.0,
-    "scatter_tree_count": 3667
+    "scatter_tree_count": 3153
   },
-  "glb_metrics": {
-    "file_name": "T_E00_S01.glb",
-    "size_bytes": 7048880,
-    "size_mb": 6.7223,
-    "sha256": "9328ec33cb3b1a036809d85309c482465124144939caf54be344ffa06b18a888",
+  "tier2_deep_audit_preview": {
+    "passed": true,
+    "total_triangles": 111732,
+    "building_triangles": 97538,
     "draw_calls": 8,
-    "total_triangles": 128170,
-    "building_triangles": 112503,
     "has_nan_inf": false,
     "bad_normals": 0,
-    "primitives_breakdown": [
-      {
-        "mesh_name": "TERRAIN_MESH",
-        "material_name": "MAT_01_TERRAIN_SATELLITE",
-        "triangles": 8192,
-        "vertices": 4225,
-        "is_building": false
-      },
-      {
-        "mesh_name": "WATER_SAIGON_RIVER",
-        "material_name": "MAT_02_SAIGON_RIVER_WATER",
-        "triangles": 181,
-        "vertices": 189,
-        "is_building": false
-      },
-      {
-        "mesh_name": "ROAD_METRO_NETWORK",
-        "material_name": "MAT_03_ROAD_ASPHALT_METRO",
-        "triangles": 7294,
-        "vertices": 10106,
-        "is_building": false
-      },
-      {
-        "mesh_name": "BLDG_04_TUBE_HOUSE",
-        "material_name": "MAT_04_TUBE_HOUSE_TERRACOTTA_TIN",
-        "triangles": 27729,
-        "vertices": 56605,
-        "is_building": true
-      },
-      {
-        "mesh_name": "BLDG_05_SHOPHOUSE",
-        "material_name": "MAT_05_SHOPHOUSE_COMMERCIAL",
-        "triangles": 25506,
-        "vertices": 48590,
-        "is_building": true
-      },
-      {
-        "mesh_name": "BLDG_06_VILLA_PORT",
-        "material_name": "MAT_06_VILLA_COLONIAL_CREAM",
-        "triangles": 225,
-        "vertices": 425,
-        "is_building": true
-      },
-      {
-        "mesh_name": "BLDG_07_APARTMENT",
-        "material_name": "MAT_07_APARTMENT_CONCRETE",
-        "triangles": 19139,
-        "vertices": 34425,
-        "is_building": true
-      },
-      {
-        "mesh_name": "BLDG_08_MODERN_TOWER",
-        "material_name": "MAT_08_MODERN_TOWER_CURTAINWALL",
-        "triangles": 39904,
-        "vertices": 70060,
-        "is_building": true
-      }
-    ]
+    "max_seam_diff_m": 0.0,
+    "floating_violations": 0,
+    "intrusion_rate_pct": 0.0,
+    "peak_elevation_y_m": 200.27
   },
-  "seam_lock_check": {
-    "grid_size": [
-      65,
-      65
-    ],
-    "step_m": 31.25,
-    "edge_sha256": "74d3e456b5eb876c8fd9fee743470a309a44b9c5b9ddf350ef5499fcbed34330",
-    "max_seam_error_m": 0.0,
-    "tolerance_m": 0.0,
-    "passed": true
+  "primitives_breakdown": [
+    {
+      "mesh": "TERRAIN_65x65",
+      "material": "MAT_01_TERRAIN_SATELLITE",
+      "vertices": 4228,
+      "triangles": 8193
+    },
+    {
+      "mesh": "WATER_SAIGON_RIVER",
+      "material": "MAT_02_SAIGON_RIVER_WATER",
+      "vertices": 543,
+      "triangles": 181
+    },
+    {
+      "mesh": "ROAD_METRO_NETWORK",
+      "material": "MAT_03_ROAD_ASPHALT_METRO",
+      "vertices": 11640,
+      "triangles": 5820
+    },
+    {
+      "mesh": "BLDG_04_TUBE_HOUSE",
+      "material": "MAT_04_TUBE_HOUSE_TERRACOTTA_TIN",
+      "vertices": 56015,
+      "triangles": 28183
+    },
+    {
+      "mesh": "BLDG_05_SHOPHOUSE",
+      "material": "MAT_05_SHOPHOUSE_COMMERCIAL",
+      "vertices": 67780,
+      "triangles": 37010
+    },
+    {
+      "mesh": "BLDG_06_VILLA",
+      "material": "MAT_06_VILLA_COLONIAL_CREAM",
+      "vertices": 1007,
+      "triangles": 487
+    },
+    {
+      "mesh": "BLDG_07_APARTMENT",
+      "material": "MAT_07_APARTMENT_CONCRETE",
+      "vertices": 44080,
+      "triangles": 24710
+    },
+    {
+      "mesh": "BLDG_08_MODERN_TOWER",
+      "material": "MAT_08_MODERN_TOWER_CURTAINWALL",
+      "vertices": 12140,
+      "triangles": 7148
+    }
+  ],
+  "gate5_context_density": {
+    "passed": true,
+    "bcr_pct": 37.76,
+    "bcr_limit_pct": 52.0,
+    "modern_tower_area_pct": 2.61,
+    "modern_tower_area_limit_pct": 22.0,
+    "modern_tower_tri_share_pct": 7.33,
+    "modern_tower_tri_limit_pct": 28.0
   },
-  "slope_seating_and_intrusion": {
-    "min_seating_depth_m": 0.75,
-    "floating_building_violations": 0,
-    "landmarks_reserved_skipped": 3,
-    "buildings_built": 5015,
-    "max_skyline_elevation_msl_m": 203.27,
-    "water_and_road_intrusion_pct": 0.0
+  "buildings_summary": {
+    "gis_version": "V1.1",
+    "built_footprints": 4867,
+    "clipped_intrusion_footprints": 2,
+    "skipped_landmark_footprints": 3
   },
-  "scatter_trees_metrics": {
-    "file_name": "T_E00_S01_scatter_trees.bin",
-    "size_bytes": 88024,
-    "sha256": "2f676b6d7716b39e7e2b0f63a4199e26425fef3edf4022521de09809b5304586",
-    "magic": "HCMC_TR1",
-    "version": 1,
-    "instance_count": 3667,
-    "water_road_intrusion_count": 0,
-    "intrusion_rate_pct": 0.0
+  "scatter_trees_summary": {
+    "instance_count": 3153,
+    "byte_length": 75688,
+    "format": "HCMC_TR1 <8sII + N*<fffffI"
+  },
+  "sha256": {
+    "T_E00_S01.glb": "1a6f53ff149c512606b3e5a14c2e2eb28bdf24ba1e466130e024864d971cd18b",
+    "T_E00_S01_scatter_trees.bin": "3b58002d09d50c187c7fc930c78e9a2a2024cc194d19bafca3cab494a525e34c",
+    "TILE_3D_T_E00_S01_preview.jpg": "8ac34e57c16766364d45e4525f2381e041ce6764cb2450d73099fcb6372374c5"
   }
 }

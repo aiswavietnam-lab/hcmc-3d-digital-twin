@@ -1,0 +1,72 @@
+{
+  "schema": "HCMC_QA_GATE1_V1.1",
+  "project_name": "HCMC_3D_DIGITAL_TWIN",
+  "task_id": "TILE_3D_T_W01_N01",
+  "tile_id": "T_W01_N01",
+  "ring": "RING_1",
+  "version": 2,
+  "gis_package_version": "V1.1",
+  "worker_id": "swaA4_3f8c",
+  "generated_at_utc": "2026-11-27T12:08:13Z",
+  "bounds_m": {
+    "x_min": -3000.0,
+    "x_max": -1000.0,
+    "z_min": -3000.0,
+    "z_max": -1000.0
+  },
+  "tier1_precommit_gate": {
+    "passed": true,
+    "glb_size_bytes": 6097008,
+    "draw_calls": 8,
+    "building_triangles": 91443,
+    "max_seam_error_m": 0.0,
+    "scatter_tree_count": 2558
+  },
+  "tier2_deep_verification": {
+    "passed": true,
+    "total_triangles": 104624,
+    "building_triangles": 91443,
+    "draw_calls": 8,
+    "has_nan_inf": false,
+    "bad_normals": 0,
+    "max_seam_diff_m": 0.0,
+    "floating_check_violations": 0,
+    "intrusion_rate_pct": 0.0,
+    "peak_elevation_y_max_m": 218.93
+  },
+  "gate5_context_and_density": {
+    "bcr_pct": 46.67,
+    "bcr_limit_pct": 52.0,
+    "modern_tower_area_share_pct": 0.64,
+    "modern_tower_area_limit_pct": 22.0,
+    "modern_tower_triangle_share_pct": 0.34,
+    "modern_tower_triangle_limit_pct": 28.0,
+    "passed": true
+  },
+  "building_summary": {
+    "total_gis_footprints": 4412,
+    "skipped_landmark_footprints": 0,
+    "batched_buildings_count": 5017,
+    "archetype_breakdown": {
+      "tube_house": 1718,
+      "shophouse": 1779,
+      "villa": 34,
+      "apartment": 1479,
+      "modern_tower": 7
+    }
+  },
+  "deliverable_hashes": {
+    "T_W01_N01.glb": {
+      "size_bytes": 6097008,
+      "sha256": "a335c9473f0e65bb0a151aec09fa20804e6a20c84a4bacb958090880ad8cf86c"
+    },
+    "T_W01_N01_scatter_trees.bin": {
+      "size_bytes": 61408,
+      "sha256": "d0a8e3cba5e40fc5cc21d473f47116b9a0e0339779a5da089339e9b38c5d48ef"
+    },
+    "TILE_3D_T_W01_N01_preview.jpg": {
+      "size_bytes": 1156607,
+      "sha256": "9a0b27935829937442e1bf475e1754dfe5d6e29e52c9e365c136170fa494585f"
+    }
+  }
+}

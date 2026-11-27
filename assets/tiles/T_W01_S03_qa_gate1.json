@@ -1,0 +1,109 @@
+{
+  "schema": "HCMC_QA_GATE1_V1",
+  "project_name": "HCMC_3D_DIGITAL_TWIN",
+  "task_id": "TILE_3D_T_W01_S03",
+  "tile_id": "T_W01_S03",
+  "worker_id": "swaA2_c81f",
+  "generated_at_utc": "2026-11-27T15:33:19Z",
+  "bounds_m": {
+    "x_min": -3000,
+    "x_max": -1000,
+    "z_min": 5000,
+    "z_max": 7000
+  },
+  "tier1_precommit_gate": {
+    "passed": true,
+    "glb_size_bytes": 3864840,
+    "draw_calls": 8,
+    "building_triangles": 59820,
+    "max_seam_error_m": 0.0,
+    "scatter_tree_count": 4200
+  },
+  "tier2_deep_audit_preview": {
+    "passed": true,
+    "total_triangles": 71109,
+    "building_triangles": 59820,
+    "draw_calls": 8,
+    "has_nan_inf": false,
+    "bad_normals": 0,
+    "max_seam_diff_m": 0.0,
+    "floating_violations": 0,
+    "intrusion_rate_pct": 0.0,
+    "peak_elevation_y_m": 57.45
+  },
+  "primitives_breakdown": [
+    {
+      "mesh": "TERRAIN_65x65",
+      "material": "MAT_01_TERRAIN_SATELLITE",
+      "vertices": 4225,
+      "triangles": 8192
+    },
+    {
+      "mesh": "WATER_SAIGON_RIVER",
+      "material": "MAT_02_SAIGON_RIVER_WATER",
+      "vertices": 597,
+      "triangles": 199
+    },
+    {
+      "mesh": "ROAD_METRO_NETWORK",
+      "material": "MAT_03_ROAD_ASPHALT_METRO",
+      "vertices": 5796,
+      "triangles": 2898
+    },
+    {
+      "mesh": "BLDG_04_TUBE_HOUSE",
+      "material": "MAT_04_TUBE_HOUSE_TERRACOTTA_TIN",
+      "vertices": 34940,
+      "triangles": 17572
+    },
+    {
+      "mesh": "BLDG_05_SHOPHOUSE",
+      "material": "MAT_05_SHOPHOUSE_COMMERCIAL",
+      "vertices": 60165,
+      "triangles": 32581
+    },
+    {
+      "mesh": "BLDG_06_VILLA",
+      "material": "MAT_06_VILLA_COLONIAL_CREAM",
+      "vertices": 4127,
+      "triangles": 1985
+    },
+    {
+      "mesh": "BLDG_07_APARTMENT",
+      "material": "MAT_07_APARTMENT_CONCRETE",
+      "vertices": 13125,
+      "triangles": 7181
+    },
+    {
+      "mesh": "BLDG_08_MODERN_TOWER",
+      "material": "MAT_08_MODERN_TOWER_CURTAINWALL",
+      "vertices": 865,
+      "triangles": 501
+    }
+  ],
+  "gate5_context_density": {
+    "passed": true,
+    "bcr_pct": 18.95,
+    "bcr_limit_pct": 52.0,
+    "modern_tower_area_pct": 0.57,
+    "modern_tower_area_limit_pct": 22.0,
+    "modern_tower_tri_share_pct": 0.84,
+    "modern_tower_tri_limit_pct": 28.0
+  },
+  "buildings_summary": {
+    "gis_version": "V1.1",
+    "built_footprints": 3462,
+    "clipped_intrusion_footprints": 0,
+    "skipped_landmark_footprints": 0
+  },
+  "scatter_trees_summary": {
+    "instance_count": 4200,
+    "byte_length": 100816,
+    "format": "HCMC_TR1 <8sII + N*<fffffI"
+  },
+  "sha256": {
+    "T_W01_S03.glb": "6306f4dadcce01f2b2271d9931c786a3312d952dd629e01a1d4f6b1b5f2c6150",
+    "T_W01_S03_scatter_trees.bin": "af122706a289a02c454e373a95313b7d82f0ee38d3411a607835dbb8662e6b55",
+    "TILE_3D_T_W01_S03_preview.jpg": "e0ba6fe43c28d580558817a7cc2333e08da89159d5cb4ddfd8c471f2a40a6756"
+  }
+}

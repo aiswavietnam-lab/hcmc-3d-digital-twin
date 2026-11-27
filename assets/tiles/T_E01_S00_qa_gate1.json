@@ -2,66 +2,101 @@
   "schema": "HCMC_QA_GATE1_V1",
   "task_id": "TILE_3D_T_E01_S00",
   "tile_id": "T_E01_S00",
-  "worker_id": "swaB3_c4e9",
-  "audited_at_utc": "2026-11-27T07:46:41Z",
+  "worker_id": "swaA1_e584",
+  "audited_at_utc": "2026-11-27T11:14:35Z",
   "passed": true,
-  "glb_metrics": {
-    "path": "02_ASSETS_3D/ring1_tiles/band_S00/T_E01_S00.glb",
-    "size_bytes": 2739236,
-    "size_mb": 2.612,
-    "budget_max_bytes": 10485760,
-    "sha256": "6bbe26bd4ead6b9ca9a62d4f6105b5952105f353fd5673cfcffa21dabbc53664",
+  "tier1_gate": {
+    "passed": true,
+    "glb_size_bytes": 1550596,
     "draw_calls": 7,
-    "budget_max_draw_calls": 8,
-    "total_triangles": 35951,
-    "building_triangles": 21751,
-    "budget_max_building_triangles": 150000,
-    "has_nan_inf": false,
-    "bad_normals": 0,
-    "peak_elevation_y_m": 177.399
-  },
-  "seam_lock_gate": {
-    "grid_verts": [
-      65,
-      65
-    ],
-    "step_m": 31.25,
+    "building_triangles": 11417,
     "max_seam_error_m": 0.0,
-    "tolerance_m": 0.0,
-    "edge_sha256": "ad306ea9f34dd097a8695142c2758504aea81aab46a21e14b6f10c4d904a4ba0"
+    "scatter_tree_count": 4200
   },
-  "slope_seating_and_intrusion_gate": {
-    "min_seating_depth_m": 0.9,
-    "required_min_depth_m": 0.5,
-    "floating_violations": 0,
-    "water_and_road_intrusion_pct": 0.0,
-    "buildings_built": 662,
-    "landmarks_reserved_skipped": 0,
-    "archetype_breakdown": {
-      "tube_house": 301,
-      "shophouse": 240,
-      "villa_colonial_modern": 0,
-      "old_apartment": 59,
-      "modern_tower": 62
+  "tier2_deep_verification": {
+    "passed": true,
+    "max_seam_diff_m": 0.0,
+    "floating_check_violations": 0,
+    "water_road_intrusion_rate_pct": 0.0,
+    "peak_elevation_msl_m": 154.51,
+    "bad_normals": 0,
+    "has_nan_inf": false
+  },
+  "mesh_breakdown": [
+    {
+      "mesh_name": "MESH_01_TERRAIN",
+      "material_name": "MAT_01_TERRAIN_SATELLITE",
+      "vertices": 4225,
+      "triangles": 8192
+    },
+    {
+      "mesh_name": "MESH_02_WATER",
+      "material_name": "MAT_02_SAIGON_RIVER_WATER",
+      "vertices": 656,
+      "triangles": 638
+    },
+    {
+      "mesh_name": "MESH_03_ROAD_METRO",
+      "material_name": "MAT_03_ROAD_ASPHALT_METRO",
+      "vertices": 8796,
+      "triangles": 6010
+    },
+    {
+      "mesh_name": "MESH_04_TUBE_HOUSE",
+      "material_name": "MAT_04_TUBE_HOUSE_TERRACOTTA_TIN",
+      "vertices": 5800,
+      "triangles": 2904
+    },
+    {
+      "mesh_name": "MESH_05_SHOPHOUSE",
+      "material_name": "MAT_05_SHOPHOUSE_COMMERCIAL",
+      "vertices": 6840,
+      "triangles": 3500
+    },
+    {
+      "mesh_name": "MESH_06_VILLA_COLONIAL",
+      "material_name": "MAT_06_VILLA_COLONIAL_CREAM",
+      "vertices": 0,
+      "triangles": 0
+    },
+    {
+      "mesh_name": "MESH_07_APARTMENT_CONCRETE",
+      "material_name": "MAT_07_APARTMENT_CONCRETE",
+      "vertices": 8428,
+      "triangles": 4614
+    },
+    {
+      "mesh_name": "MESH_08_MODERN_TOWER",
+      "material_name": "MAT_08_MODERN_TOWER_CURTAINWALL",
+      "vertices": 715,
+      "triangles": 399
     }
+  ],
+  "species_counts": {
+    "0": 2296,
+    "1": 326,
+    "2": 339,
+    "3": 1239
   },
-  "scatter_trees_gate": {
-    "path": "02_ASSETS_3D/ring1_tiles/band_S00/T_E01_S00_scatter_trees.bin",
-    "magic": "HCMC_TR1",
-    "version": 1,
-    "instance_count": 3058,
-    "size_bytes": 73408,
-    "sha256": "a32b2bb9568b3263db34d42098b70ca8e6d3464379f96b9f6a523d894cb71e08",
-    "intrusion_rate_pct": 0.0
+  "landmark_reserved": {
+    "id": "cau_ba_son",
+    "skipped_footprints": 0,
+    "anchor_xz_m": [
+      1148.0,
+      254.0
+    ]
   },
-  "preview_contact_sheet": {
-    "path": "04_QA_BUILDS/contact_sheets/TILE_3D_T_E01_S00_preview.jpg",
-    "resolution": [
-      1920,
-      1080
-    ],
-    "format": "JPEG_Q95",
-    "size_bytes": 874089,
-    "sha256": "70f4d3579f374862a1b599f176a9aca4357e5b529163c6ef065582b6fbd249cb"
+  "version": 2,
+  "gis_package_version": "V1.1",
+  "gate_5_context_density": {
+    "passed": true,
+    "bcr_pct": 6.41,
+    "max_bcr_pct": 52.0,
+    "modern_tower_area_share_pct": 5.53,
+    "max_modern_tower_area_share_pct": 22.0,
+    "modern_tower_triangle_share_pct": 3.49,
+    "max_modern_tower_triangle_share_pct": 28.0,
+    "modern_tower_count_built": 5,
+    "landmark_anchor_reserved": "cau_ba_son"
   }
 }

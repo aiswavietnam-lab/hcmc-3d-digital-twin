@@ -3,22 +3,22 @@
   "task_id": "TILE_3D_T_E01_N01",
   "tile_id": "T_E01_N01",
   "worker_id": "swaA1_e584",
-  "audited_at_utc": "2026-11-27T07:25:10Z",
+  "audited_at_utc": "2026-11-27T09:35:12Z",
   "passed": true,
   "tier1_gate": {
     "passed": true,
-    "glb_size_bytes": 8565480,
+    "glb_size_bytes": 6187616,
     "draw_calls": 8,
-    "building_triangles": 113305,
+    "building_triangles": 87609,
     "max_seam_error_m": 0.0,
-    "scatter_tree_count": 3509
+    "scatter_tree_count": 3582
   },
   "tier2_deep_verification": {
     "passed": true,
     "max_seam_diff_m": 0.0,
     "floating_check_violations": 0,
     "water_road_intrusion_rate_pct": 0.0,
-    "peak_elevation_msl_m": 183.38,
+    "peak_elevation_msl_m": 138.58,
     "bad_normals": 0,
     "has_nan_inf": false
   },
@@ -44,39 +44,39 @@
     {
       "mesh_name": "MESH_04_TUBE_HOUSE",
       "material_name": "MAT_04_TUBE_HOUSE_TERRACOTTA_TIN",
-      "vertices": 94039,
-      "triangles": 47441
+      "vertices": 68919,
+      "triangles": 34575
     },
     {
       "mesh_name": "MESH_05_SHOPHOUSE",
       "material_name": "MAT_05_SHOPHOUSE_COMMERCIAL",
-      "vertices": 72877,
-      "triangles": 38685
+      "vertices": 59940,
+      "triangles": 30900
     },
     {
       "mesh_name": "MESH_06_VILLA_COLONIAL",
       "material_name": "MAT_06_VILLA_COLONIAL_CREAM",
-      "vertices": 8679,
-      "triangles": 4013
+      "vertices": 9396,
+      "triangles": 4388
     },
     {
       "mesh_name": "MESH_07_APARTMENT_CONCRETE",
       "material_name": "MAT_07_APARTMENT_CONCRETE",
-      "vertices": 30153,
-      "triangles": 16683
+      "vertices": 30092,
+      "triangles": 16660
     },
     {
       "mesh_name": "MESH_08_MODERN_TOWER",
       "material_name": "MAT_08_MODERN_TOWER_CURTAINWALL",
-      "vertices": 11625,
-      "triangles": 6483
+      "vertices": 1940,
+      "triangles": 1086
     }
   ],
   "species_counts": {
-    "0": 1546,
-    "1": 364,
-    "2": 1050,
-    "3": 549
+    "0": 1627,
+    "1": 349,
+    "2": 1052,
+    "3": 554
   },
   "landmark_reserved": {
     "id": "landmark_81",
@@ -85,5 +85,18 @@
       2492.0,
       -1682.0
     ]
+  },
+  "version": 2,
+  "gis_package_version": "V1.1",
+  "gate_5_context_density": {
+    "passed": true,
+    "bcr_pct": 28.32,
+    "max_bcr_pct": 52.0,
+    "modern_tower_area_share_pct": 3.08,
+    "max_modern_tower_area_share_pct": 22.0,
+    "modern_tower_triangle_share_pct": 1.24,
+    "max_modern_tower_triangle_share_pct": 28.0,
+    "modern_tower_count_built": 13,
+    "landmark_footprints_reserved": 8
   }
 }

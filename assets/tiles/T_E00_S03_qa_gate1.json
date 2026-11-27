@@ -1,0 +1,75 @@
+{
+  "schema": "HCMC_QA_GATE1_V1",
+  "task_id": "TILE_3D_T_E00_S03",
+  "tile_id": "T_E00_S03",
+  "worker_id": "swaA3_3d9e",
+  "passed": true,
+  "tier1_gate": {
+    "passed": true,
+    "glb_size_bytes": 2669456,
+    "draw_calls": 8,
+    "building_triangles": 29361,
+    "max_seam_error_m": 0.0,
+    "scatter_tree_count": 2586
+  },
+  "tier2_deep_audit": {
+    "passed": true,
+    "max_seam_diff_m": 0.0,
+    "floating_check_violations": 0,
+    "intrusion_rate_pct": 0.0,
+    "max_y_m": 74.908,
+    "errors": []
+  },
+  "geometry_breakdown": {
+    "placed_buildings_count": 2110,
+    "skipped_landmark_buildings": 0,
+    "meshes": {
+      "MESH_01_TERRAIN": {
+        "vertices": 4226,
+        "triangles": 8192,
+        "material": "MAT_01_TERRAIN_SATELLITE"
+      },
+      "MESH_02_WATER": {
+        "vertices": 963,
+        "triangles": 321,
+        "material": "MAT_02_SAIGON_RIVER_WATER"
+      },
+      "MESH_03_ROAD_METRO": {
+        "vertices": 17616,
+        "triangles": 8808,
+        "material": "MAT_03_ROAD_ASPHALT_METRO"
+      },
+      "MESH_04_TUBE_HOUSE": {
+        "vertices": 17845,
+        "triangles": 8957,
+        "material": "MAT_04_TUBE_HOUSE_TERRACOTTA_TIN"
+      },
+      "MESH_05_SHOPHOUSE": {
+        "vertices": 19530,
+        "triangles": 10254,
+        "material": "MAT_05_SHOPHOUSE_COMMERCIAL"
+      },
+      "MESH_06_VILLA": {
+        "vertices": 6606,
+        "triangles": 2842,
+        "material": "MAT_06_VILLA_COLONIAL_CREAM"
+      },
+      "MESH_07_APARTMENT": {
+        "vertices": 12595,
+        "triangles": 6975,
+        "material": "MAT_07_APARTMENT_CONCRETE"
+      },
+      "MESH_08_MODERN_TOWER": {
+        "vertices": 585,
+        "triangles": 333,
+        "material": "MAT_08_MODERN_TOWER_CURTAINWALL"
+      }
+    }
+  },
+  "sha256": {
+    "T_E00_S03.glb": "08ba6d41a245ab990321bc3e790b2c73e5ae37a439a4b9d1dba0b3af3bb7bc69",
+    "T_E00_S03_scatter_trees.bin": "107ef1c718cffea0c31402c838f7ca708de270e7a0699c7855bf4944101668d3",
+    "TILE_3D_T_E00_S03_preview.jpg": "e3cd3fc6ff13009a9ea2d0c4f2bb3a66fd63de63a343889569a01b8f684a89b6"
+  },
+  "elapsed_sec": 2.78
+}
