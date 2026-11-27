@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TP.HCM 3D · Studio Bản Sao Số</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <main id="viewport-container" aria-label="Khung cảnh 3D TP.HCM"></main>
+
+  <header class="studio-bar glass-panel">
+    <div class="identity">
+      <div class="brand-badge">HCM</div>
+      <div>
+        <h1>TP.HCM <span>3D</span></h1>
+        <p id="subtitle-status">Đang tải dữ liệu bản sao số…</p>
+      </div>
+    </div>
+
+    <div class="search-wrap">
+      <input id="search-input" type="search" placeholder="Tìm địa danh hoặc mã ô (vd: Landmark 81, T_E00_S00)…" autocomplete="off">
+      <div id="search-results" class="search-results" hidden></div>
+    </div>
+
+    <div class="bar-actions">
+      <button id="refresh-btn" class="bar-btn" type="button" title="Quét lại ô 3D mới trên Drive">⟳ Làm mới</button>
+      <button id="photo-btn" class="bar-btn" type="button" title="Chụp ảnh màn hình (P)">📷 Chụp ảnh</button>
+      <button id="toggle-panel-btn" class="bar-btn active" type="button">☰ Bảng Studio</button>
+    </div>
+  </header>
+
+  <div id="minimap-card" class="minimap-card glass-panel">
+    <div class="minimap-head">
+      <span>Lưới Ring 1 (10×10 km)</span>
+      <span id="minimap-progress" class="chip">0/25</span>
+    </div>
+    <div id="minimap-grid" class="minimap-grid"></div>
+    <div class="minimap-legend">
+      <span><i class="dot ready"></i>Đã có 3D</span>
+      <span><i class="dot locked"></i>Đang dựng</span>
+      <span><i class="dot pending"></i>Chờ</span>
+    </div>
+  </div>
+
+  <div id="hud-bottom" class="hud-bottom glass-panel">
+    <span>Kéo trái: Xoay</span>
+    <span>Kéo phải / Giữa: Di chuyển</span>
+    <span>Cuộn: Thu phóng</span>
+    <span>W A S D / Q E: Bay tự do</span>
+    <span id="cursor-coords">X: 0 m · Z: 0 m</span>
+  </div>
+
+  <aside id="control-panel" class="control-panel glass-panel">
+    <div class="panel-heading">
+      <h2>Bảng Điều Khiển</h2>
+      <span id="fps-badge" class="chip">— FPS</span>
+    </div>
+
+    <div class="studio-tabs" role="tablist">
+      <button class="tab-btn active" data-tab="climate" type="button">☀ Ánh sáng</button>
+      <button class="tab-btn" data-tab="layers" type="button">◫ Lớp 3D</button>
+      <button class="tab-btn" data-tab="places" type="button">⌖ Địa danh &amp; Ô</button>
+    </div>
+
+    <div class="panel-scroll">
+      <section id="pane-climate" class="tab-pane active">
+        <div class="time-card">
+          <div class="time-heading">
+            <label for="time-slider">Giờ TP.HCM (UTC+7)</label>
+            <output id="time-value">16:40</output>
+          </div>
+          <input id="time-slider" type="range" min="0" max="1439" value="1000" step="1">
+          <div class="row-between">
+            <button id="timelapse-btn" class="small-btn" type="button">▶ Tua ngày đêm</button>
+            <span class="muted">Live Auto-Sync 30s</span>
+          </div>
+        </div>
+
+        <h3>Khung cảnh thời tiết</h3>
+        <div class="preset-grid">
+          <button class="preset-btn" data-minutes="370" data-fog="18" data-night="10" type="button">🌅 Bình minh<small>06:10</small></button>
+          <button class="preset-btn" data-minutes="630" data-fog="8" data-night="0" type="button">☀️ Nắng Sài Gòn<small>10:30</small></button>
+          <button class="preset-btn active" data-minutes="1000" data-fog="14" data-night="35" type="button">🌇 Hoàng hôn Sông SG<small>16:40</small></button>
+          <button class="preset-btn" data-minutes="1230" data-fog="20" data-night="95" type="button">🌃 Đêm CBD<small>20:30</small></button>
+        </div>
+
+        <h3>Tùy chỉnh môi trường</h3>
+        <div class="range-row">
+          <label for="fog-slider">Độ mù khí quyển</label>
+          <input id="fog-slider" type="range" min="0" max="100" value="14">
+        </div>
+        <div class="range-row">
+          <label for="night-slider">Độ sáng đèn đêm</label>
+          <input id="night-slider" type="range" min="0" max="100" value="35">
+        </div>
+      </section>
+
+      <section id="pane-layers" class="tab-pane">
+        <h3>Lớp dữ liệu 3D</h3>
+        <div class="layer-list">
+          <label class="layer-item"><input type="checkbox" data-layer="terrain" checked><span>Địa hình DEM &amp; Vệ tinh</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="water" checked><span>Sông Sài Gòn &amp; Kênh rạch</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="roads" checked><span>Đường phố &amp; Metro</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="buildings" checked><span>Công trình đô thị 3D</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="trees" checked><span>Cây xanh 4 loài (Instanced)</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="satFloor" checked><span>Nền vệ tinh các ô chờ</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="grid" checked><span>Lưới 25 ô Ring 1</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="labels" checked><span>Nhãn Địa danh TP.HCM</span></label>
+        </div>
+
+        <h3>Thông số thời gian thực</h3>
+        <dl class="metrics">
+          <div><dt>Ô 3D đã nạp</dt><dd id="stat-tiles">0</dd></div>
+          <div><dt>Tổng cây 3D</dt><dd id="stat-trees">0</dd></div>
+          <div><dt>Lệnh vẽ (Draw Calls)</dt><dd id="stat-calls">0</dd></div>
+          <div><dt>Tam giác (Tris)</dt><dd id="stat-tris">0</dd></div>
+        </dl>
+      </section>
+
+      <section id="pane-places" class="tab-pane">
+        <h3>Địa danh biểu tượng TP.HCM</h3>
+        <div id="landmarks-list" class="item-list"></div>
+
+        <h3>Danh sách 25 ô Ring 1</h3>
+        <div id="tiles-list" class="item-list"></div>
+      </section>
+    </div>
+  </aside>
+
+  <div id="labels-overlay" class="labels-overlay"></div>
+
+  <script src="./js/vendor/three.min.js"></script>
+  <script src="./js/vendor/GLTFLoader.js"></script>
+  <script src="./js/hcmc_viewer.js"></script>
+</body>
+</html>
