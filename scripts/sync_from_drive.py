@@ -120,6 +120,19 @@ def sync_from_local_drive(drive_root: pathlib.Path) -> dict:
             if copy_if_changed(src, ASSETS_LANDMARKS_DIR / logical):
                 copied += 1
 
+    # 3b. Sync upgraded Multi-Device Web UI & Workflows from 04_QA_BUILDS/gh_pages_web (if present)
+    web_upgrade_dir = drive_root / "04_QA_BUILDS" / "gh_pages_web"
+    if web_upgrade_dir.exists():
+        for ui_rel in [
+            "index.html",
+            "css/style.css",
+            "js/hcmc_viewer.js",
+            ".github/workflows/daily-sync-drive.yml",
+        ]:
+            src_ui = web_upgrade_dir / ui_rel
+            if src_ui.exists() and copy_if_changed(src_ui, ROOT / ui_rel):
+                copied += 1
+
     # 4. Read locks & results
     locks_files = dedup_dir_files(drive_root / "00_STATE" / "locks")
     results_files = dedup_dir_files(drive_root / "00_STATE" / "results")

@@ -1,39 +1,70 @@
 <!doctype html>
-<html lang="vi">
+<html lang="vi" data-device="desktop" data-input="mouse">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TP.HCM 3D · Studio Bản Sao Số</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#07111a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>TP.HCM 3D · Studio Bản Sao Số Đa Thiết Bị</title>
   <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
   <main id="viewport-container" aria-label="Khung cảnh 3D TP.HCM"></main>
 
-  <header class="studio-bar glass-panel">
+  <!-- Thanh điều hướng thông minh tự thích ứng PC / Tablet / Mobile -->
+  <header class="studio-bar glass-panel" id="studio-bar">
     <div class="identity">
-      <div class="brand-badge">HCM</div>
-      <div>
-        <h1>TP.HCM <span>3D</span></h1>
-        <p id="subtitle-status">Đang tải dữ liệu bản sao số…</p>
+      <div class="brand-badge" title="Bản Sao Số 3D TP.HCM">HCM</div>
+      <div class="identity-text">
+        <div class="title-row">
+          <h1>TP.HCM <span>3D</span></h1>
+          <span id="device-badge" class="device-pill" title="Chế độ thiết bị tự động nhận diện">💻 PC</span>
+        </div>
+        <p id="subtitle-status">Đang khởi tạo cảnh quan 3D…</p>
       </div>
     </div>
 
-    <div class="search-wrap">
-      <input id="search-input" type="search" placeholder="Tìm địa danh hoặc mã ô (vd: Landmark 81, T_E00_S00)…" autocomplete="off">
+    <div class="search-wrap" id="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="search-input" type="search" placeholder="Tìm địa danh hoặc mã ô (Landmark 81, Bến Thành, T_E00_S00)…" autocomplete="off">
+      <button id="search-close-btn" class="icon-only-btn mobile-only" type="button" aria-label="Đóng tìm kiếm">✕</button>
       <div id="search-results" class="search-results" hidden></div>
     </div>
 
     <div class="bar-actions">
-      <button id="refresh-btn" class="bar-btn" type="button" title="Quét lại ô 3D mới trên Drive">⟳ Làm mới</button>
-      <button id="photo-btn" class="bar-btn" type="button" title="Chụp ảnh màn hình (P)">📷 Chụp ảnh</button>
-      <button id="toggle-panel-btn" class="bar-btn active" type="button">☰ Bảng Studio</button>
+      <button id="mobile-search-btn" class="bar-btn mobile-only" type="button" title="Tìm kiếm địa danh" aria-label="Tìm kiếm">🔍</button>
+      <button id="reset-cam-btn" class="bar-btn" type="button" title="Về góc nhìn trung tâm (R)">⌖ <span class="btn-label">Trung tâm</span></button>
+      <button id="flypad-toggle-btn" class="bar-btn touch-prefer" type="button" title="Bật/tắt cần lái bay ảo trên màn hình">🕹️ <span class="btn-label">Lái bay</span></button>
+      <button id="cinema-btn" class="bar-btn desktop-tablet-only" type="button" title="Chế độ toàn cảnh ẩn giao diện (H)">🎬 <span class="btn-label"> Điện ảnh</span></button>
+      <button id="photo-btn" class="bar-btn" type="button" title="Chụp ảnh chất lượng cao (P)">📷 <span class="btn-label">Chụp ảnh</span></button>
+      <button id="refresh-btn" class="bar-btn desktop-only" type="button" title="Đồng bộ dữ liệu mới">⟳ <span class="btn-label">Làm mới</span></button>
+      <button id="toggle-panel-btn" class="bar-btn active" type="button" title="Mở/đóng Bảng điều khiển">☰ <span class="btn-label">Studio</span></button>
     </div>
   </header>
 
+  <!-- Nút thoát nhanh chế độ Điện ảnh -->
+  <button id="exit-cinema-btn" class="exit-cinema-btn glass-panel" type="button" hidden>✕ Hiện lại giao diện (H)</button>
+
+  <!-- Thanh tiến độ nạp mượt không chặn thao tác -->
+  <div id="stream-progress-wrap" class="stream-progress-wrap" hidden>
+    <div id="stream-progress-bar" class="stream-progress-bar"></div>
+    <span id="stream-progress-text">Đang nạp ưu tiên theo tầm nhìn…</span>
+  </div>
+
+  <!-- Nút thu gọn Minimap trên điện thoại -->
+  <button id="minimap-fab" class="minimap-fab glass-panel" type="button" title="Mở bản đồ lưới 25 ô">
+    🗺️ <span id="minimap-fab-count">0/25</span>
+  </button>
+
+  <!-- Thẻ Minimap Lưới 25 Ô Ring 1 -->
   <div id="minimap-card" class="minimap-card glass-panel">
     <div class="minimap-head">
       <span>Lưới Ring 1 (10×10 km)</span>
-      <span id="minimap-progress" class="chip">0/25</span>
+      <div class="minimap-head-right">
+        <span id="minimap-progress" class="chip">0/25</span>
+        <button id="minimap-close-btn" class="icon-only-btn mobile-only" type="button" aria-label="Thu gọn bản đồ">✕</button>
+      </div>
     </div>
     <div id="minimap-grid" class="minimap-grid"></div>
     <div class="minimap-legend">
@@ -43,18 +74,38 @@
     </div>
   </div>
 
+  <!-- Cần điều khiển ảo (Virtual Drone Pad) tối ưu cảm ứng Mobile/Tablet -->
+  <div id="virtual-flypad" class="virtual-flypad" hidden>
+    <div id="joy-move-zone" class="joy-zone" aria-label="Cần di chuyển mặt phẳng">
+      <div class="joy-ring">
+        <div id="joy-move-knob" class="joy-knob"></div>
+      </div>
+      <span class="joy-caption">Bay Tới / Ngang</span>
+    </div>
+    <div class="joy-vertical-group">
+      <button id="joy-up-btn" class="joy-vert-btn glass-panel" type="button" aria-label="Bay lên cao">▲ Cao</button>
+      <button id="joy-down-btn" class="joy-vert-btn glass-panel" type="button" aria-label="Hạ độ cao">▼ Thấp</button>
+    </div>
+  </div>
+
+  <!-- Thanh hướng dẫn thao tác tự động đổi nội dung theo Chuột vs Cảm ứng -->
   <div id="hud-bottom" class="hud-bottom glass-panel">
-    <span>Kéo trái: Xoay</span>
-    <span>Kéo phải / Giữa: Di chuyển</span>
-    <span>Cuộn: Thu phóng</span>
-    <span>W A S D / Q E: Bay tự do</span>
+    <span id="hud-hint-primary">Kéo trái: Xoay · Kéo phải: Trượt · Cuộn: Thu phóng · Nhấp đúp: Bay tới · WASD: Bay</span>
     <span id="cursor-coords">X: 0 m · Z: 0 m</span>
   </div>
 
-  <aside id="control-panel" class="control-panel glass-panel">
+  <!-- Bảng Studio (Sidebar trên PC/Tablet, Bottom Sheet vuốt mượt trên Mobile) -->
+  <aside id="control-panel" class="control-panel glass-panel" aria-label="Bảng điều khiển Studio">
+    <div id="sheet-drag-handle" class="sheet-drag-handle" title="Vuốt hoặc chạm để thu gọn / mở rộng">
+      <span class="handle-pill"></span>
+    </div>
+
     <div class="panel-heading">
       <h2>Bảng Điều Khiển</h2>
-      <span id="fps-badge" class="chip">— FPS</span>
+      <div class="panel-heading-badges">
+        <span id="fps-badge" class="chip">— FPS</span>
+        <button id="panel-close-mobile" class="icon-only-btn mobile-only" type="button" aria-label="Thu gọn bảng">✕</button>
+      </div>
     </div>
 
     <div class="studio-tabs" role="tablist">
@@ -63,53 +114,57 @@
       <button class="tab-btn" data-tab="places" type="button">⌖ Địa danh &amp; Ô</button>
     </div>
 
-    <div class="panel-scroll">
+    <div class="panel-scroll" id="panel-scroll">
       <section id="pane-climate" class="tab-pane active">
         <div class="time-card">
           <div class="time-heading">
-            <label for="time-slider">Giờ TP.HCM (UTC+7)</label>
+            <label for="time-slider">Giờ Mặt trời TP.HCM (UTC+7)</label>
             <output id="time-value">16:40</output>
           </div>
           <input id="time-slider" type="range" min="0" max="1439" value="1000" step="1">
           <div class="row-between">
             <button id="timelapse-btn" class="small-btn" type="button">▶ Tua ngày đêm</button>
-            <span class="muted">Live Auto-Sync 30s</span>
+            <span class="muted">Bóng đổ thực 2048px</span>
           </div>
         </div>
 
-        <h3>Khung cảnh thời tiết</h3>
+        <h3>Khung cảnh thời tiết Sài Gòn</h3>
         <div class="preset-grid">
-          <button class="preset-btn" data-minutes="370" data-fog="18" data-night="10" type="button">🌅 Bình minh<small>06:10</small></button>
-          <button class="preset-btn" data-minutes="630" data-fog="8" data-night="0" type="button">☀️ Nắng Sài Gòn<small>10:30</small></button>
-          <button class="preset-btn active" data-minutes="1000" data-fog="14" data-night="35" type="button">🌇 Hoàng hôn Sông SG<small>16:40</small></button>
-          <button class="preset-btn" data-minutes="1230" data-fog="20" data-night="95" type="button">🌃 Đêm CBD<small>20:30</small></button>
+          <button class="preset-btn" data-minutes="370" data-fog="18" data-night="15" type="button">🌅 Bình minh<small>06:10 · Sương nhẹ</small></button>
+          <button class="preset-btn" data-minutes="630" data-fog="8" data-night="0" type="button">☀️ Nắng Sài Gòn<small>10:30 · Trong trẻo</small></button>
+          <button class="preset-btn active" data-minutes="1000" data-fog="14" data-night="38" type="button">🌇 Hoàng hôn Sông SG<small>16:40 · Phản chiếu</small></button>
+          <button class="preset-btn" data-minutes="1230" data-fog="20" data-night="95" type="button">🌃 Đêm CBD Lên Đèn<small>20:30 · Rực sáng</small></button>
         </div>
 
-        <h3>Tùy chỉnh môi trường</h3>
+        <h3>Tùy chỉnh khí quyển &amp; Đèn đêm</h3>
         <div class="range-row">
-          <label for="fog-slider">Độ mù khí quyển</label>
+          <div class="row-between-tight"><label for="fog-slider">Độ mù khí quyển xa</label><span id="fog-val" class="muted">14%</span></div>
           <input id="fog-slider" type="range" min="0" max="100" value="14">
         </div>
         <div class="range-row">
-          <label for="night-slider">Độ sáng đèn đêm</label>
-          <input id="night-slider" type="range" min="0" max="100" value="35">
+          <div class="row-between-tight"><label for="night-slider">Cường độ đèn cao ốc &amp; cầu đêm</label><span id="night-val" class="muted">38%</span></div>
+          <input id="night-slider" type="range" min="0" max="100" value="38">
+        </div>
+        <div class="range-row">
+          <div class="row-between-tight"><label for="damping-slider">Độ mượt quán tính Camera</label><span id="damping-val" class="muted">Chuẩn</span></div>
+          <input id="damping-slider" type="range" min="20" max="100" value="72">
         </div>
       </section>
 
       <section id="pane-layers" class="tab-pane">
-        <h3>Lớp dữ liệu 3D</h3>
+        <h3>Lớp dữ liệu không gian 3D</h3>
         <div class="layer-list">
-          <label class="layer-item"><input type="checkbox" data-layer="terrain" checked><span>Địa hình DEM &amp; Vệ tinh</span></label>
-          <label class="layer-item"><input type="checkbox" data-layer="water" checked><span>Sông Sài Gòn &amp; Kênh rạch</span></label>
-          <label class="layer-item"><input type="checkbox" data-layer="roads" checked><span>Đường phố &amp; Metro</span></label>
-          <label class="layer-item"><input type="checkbox" data-layer="buildings" checked><span>Công trình đô thị 3D</span></label>
-          <label class="layer-item"><input type="checkbox" data-layer="trees" checked><span>Cây xanh 4 loài (Instanced)</span></label>
-          <label class="layer-item"><input type="checkbox" data-layer="satFloor" checked><span>Nền vệ tinh các ô chờ</span></label>
-          <label class="layer-item"><input type="checkbox" data-layer="grid" checked><span>Lưới 25 ô Ring 1</span></label>
-          <label class="layer-item"><input type="checkbox" data-layer="labels" checked><span>Nhãn Địa danh TP.HCM</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="terrain" checked><span>Địa hình DEM &amp; Ảnh vệ tinh thật</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="water" checked><span>Sông Sài Gòn &amp; Hệ thống kênh rạch</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="roads" checked><span>Mạng lưới đường &amp; Tuyến Metro số 1</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="buildings" checked><span>Công trình đô thị &amp; Biểu tượng 3D</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="trees" checked><span>Cây xanh 4 loài nhiệt đới (Instanced)</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="satFloor" checked><span>Nền vệ tinh các ô đang chờ</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="grid" checked><span>Khung ranh giới 25 ô Ring 1</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="labels" checked><span>Nhãn tên Địa danh thông minh</span></label>
         </div>
 
-        <h3>Thông số thời gian thực</h3>
+        <h3>Thông số đồ họa thời gian thực</h3>
         <dl class="metrics">
           <div><dt>Ô 3D đã nạp</dt><dd id="stat-tiles">0</dd></div>
           <div><dt>Tổng cây 3D</dt><dd id="stat-trees">0</dd></div>
@@ -119,16 +174,20 @@
       </section>
 
       <section id="pane-places" class="tab-pane">
-        <h3>Địa danh biểu tượng TP.HCM</h3>
+        <h3>Công trình biểu tượng TP.HCM</h3>
         <div id="landmarks-list" class="item-list"></div>
 
-        <h3>Danh sách 25 ô Ring 1</h3>
+        <h3>Danh sách 25 ô quy hoạch Ring 1</h3>
         <div id="tiles-list" class="item-list"></div>
       </section>
     </div>
   </aside>
 
+  <!-- Lớp nhãn địa danh tăng tốc phần cứng translate3d -->
   <div id="labels-overlay" class="labels-overlay"></div>
+
+  <!-- Tâm phản hồi trực quan khi chạm đúp / nhấp đúp bay tới -->
+  <div id="focus-ping" class="focus-ping" hidden></div>
 
   <script src="./js/vendor/three.min.js"></script>
   <script src="./js/vendor/GLTFLoader.js"></script>

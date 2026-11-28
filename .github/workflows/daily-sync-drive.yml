@@ -1,0 +1,50 @@
+name: Auto Sync HCMC 3D Digital Twin from Google Drive
+
+on:
+  schedule:
+    - cron: "15 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-drive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install rclone for Google Drive sync
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq rclone
+
+      - name: Pull HCMC_3D_DIGITAL_TWIN from Google Drive & Build world-index
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          if [ -z "$GOOGLE_SERVICE_ACCOUNT_JSON" ]; then
+            echo "Chưa cấu hình secret GOOGLE_SERVICE_ACCOUNT_JSON — bỏ qua tự động kéo."
+            exit 0
+          fi
+          mkdir -p /tmp/sa /tmp/drive_hcmc
+          printf "%s" "$GOOGLE_SERVICE_ACCOUNT_JSON" > /tmp/sa/key.json
+          rclone copy ":drive,service_account_file=/tmp/sa/key.json,root_folder_id=1MZgx6V53Dcy34KvtM-jkvyAp0yVWY5Vn:" /tmp/drive_hcmc --transfers 8 --fast-list
+          python3 scripts/sync_from_drive.py --local-drive /tmp/drive_hcmc
+
+      - name: Commit and Push to GitHub Pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(auto-sync): sync latest HCMC 3D tiles, landmarks & UI from Drive"
+            git pull --rebase origin main
+            git push origin main
+          fi
