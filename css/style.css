@@ -626,6 +626,9 @@ input[type="range"] {
 }
 
 /* ==================== VIRTUAL DRONE FLYPAD (TOUCH) ==================== */
+.virtual-flypad[hidden] {
+  display: none !important;
+}
 .virtual-flypad {
   position: fixed;
   left: calc(16px + var(--safe-left));

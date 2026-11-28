@@ -162,20 +162,52 @@
     buildings: true,
     trees: true,
     satFloor: true,
-    grid: true,
+    grid: false,
     labels: true,
   };
+  groups.grid.visible = false;
+
+  // Neutral soft horizon base plane outside Ring 1 (prevents jarring brown background gaps)
+  const horizonGeo = new THREE.PlaneGeometry(80000, 80000);
+  const horizonMat = new THREE.MeshStandardMaterial({
+    color: 0x9aa698,
+    roughness: 0.98,
+    metalness: 0.0,
+  });
+  const horizonFloor = new THREE.Mesh(horizonGeo, horizonMat);
+  horizonFloor.rotation.x = -Math.PI / 2;
+  horizonFloor.position.set(2000, -2.6, 2000);
+  horizonFloor.receiveShadow = true;
+  scene.add(horizonFloor);
 
   // ==================== 3. BUTTER-SMOOTH INERTIAL CAMERA RIG ====================
+  const urlCam = (() => {
+    try {
+      const q = new URLSearchParams(location.search).get('cam');
+      if (!q) return null;
+      const parts = q.split(',').map(Number);
+      if (parts.length >= 3 && parts.every(Number.isFinite)) {
+        return {
+          x: parts[0],
+          z: parts[1],
+          dist: parts[2],
+          yaw: Number.isFinite(parts[3]) ? parts[3] : -0.68,
+          pitch: Number.isFinite(parts[4]) ? parts[4] : 0.44,
+        };
+      }
+    } catch (_) {}
+    return null;
+  })();
+
   const camState = {
-    target: new THREE.Vector3(450, 14, 250),
-    goalTarget: new THREE.Vector3(450, 14, 250),
-    yaw: -0.68,
-    goalYaw: -0.68,
-    pitch: 0.44,
-    goalPitch: 0.44,
-    dist: 2100,
-    goalDist: 2100,
+    target: new THREE.Vector3(urlCam ? urlCam.x : 450, 14, urlCam ? urlCam.z : 250),
+    goalTarget: new THREE.Vector3(urlCam ? urlCam.x : 450, 14, urlCam ? urlCam.z : 250),
+    yaw: urlCam ? urlCam.yaw : -0.68,
+    goalYaw: urlCam ? urlCam.yaw : -0.68,
+    pitch: urlCam ? urlCam.pitch : 0.44,
+    goalPitch: urlCam ? urlCam.pitch : 0.44,
+    dist: urlCam ? urlCam.dist : 2100,
+    goalDist: urlCam ? urlCam.dist : 2100,
     flyAnim: null,
     dampingStrength: 11.5, // Controlled by UI smoothness slider
   };
@@ -435,8 +467,10 @@
   const joyKnob = document.getElementById('joy-move-knob');
 
   if (flypadBtn && flypadEl) {
+    flypadEl.style.display = flypadEl.hidden ? 'none' : 'flex';
     flypadBtn.addEventListener('click', () => {
       flypadEl.hidden = !flypadEl.hidden;
+      flypadEl.style.display = flypadEl.hidden ? 'none' : 'flex';
       flypadBtn.classList.toggle('active', !flypadEl.hidden);
     });
   }
@@ -521,6 +555,62 @@
   // Registry of emissive-capable building/landmark materials for Night CBD Glow
   const nightGlowMats = new Set();
   let currentNightFactor = 0.38;
+
+  // Unified city-wide PBR materials (eliminates inter-tile color/water seam steps)
+  const SHARED_WATER_MAT = new THREE.MeshStandardMaterial({
+    name: 'MAT_02_SAIGON_RIVER_WATER',
+    color: 0x2f7484,
+    roughness: 0.18,
+    metalness: 0.30,
+    transparent: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -1,
+    polygonOffsetUnits: -1,
+  });
+
+  const SHARED_ROAD_MAT = new THREE.MeshStandardMaterial({
+    name: 'MAT_03_ROAD_ASPHALT_METRO',
+    color: 0x4b535e,
+    roughness: 0.88,
+    metalness: 0.06,
+    polygonOffset: true,
+    polygonOffsetFactor: -1,
+    polygonOffsetUnits: -1,
+  });
+
+  const UNIFIED_BLDG_PALETTE = {
+    TUBE_HOUSE: { color: 0xdccbb6, roughness: 0.86, metalness: 0.04 },
+    SHOPHOUSE: { color: 0xe6d8c3, roughness: 0.82, metalness: 0.06 },
+    VILLA: { color: 0xefe7d8, roughness: 0.80, metalness: 0.05 },
+    APARTMENT: { color: 0xcfd6de, roughness: 0.84, metalness: 0.08 },
+    MODERN_TOWER: { color: 0x6c9cc2, roughness: 0.24, metalness: 0.52 },
+  };
+  const sharedBldgMats = {};
+  Object.entries(UNIFIED_BLDG_PALETTE).forEach(([k, spec]) => {
+    sharedBldgMats[k] = new THREE.MeshStandardMaterial({
+      name: 'MAT_UNIFIED_' + k,
+      color: spec.color,
+      roughness: spec.roughness,
+      metalness: spec.metalness,
+    });
+  });
+
+  function resolveUnifiedBldgMat(meshName, matName) {
+    const key = ((meshName || '') + ' ' + (matName || '')).toUpperCase();
+    if (key.includes('MODERN') || key.includes('TOWER') || key.includes('CURTAIN') || key.includes('08')) {
+      return sharedBldgMats.MODERN_TOWER;
+    }
+    if (key.includes('APARTMENT') || key.includes('CONCRETE') || key.includes('07')) {
+      return sharedBldgMats.APARTMENT;
+    }
+    if (key.includes('VILLA') || key.includes('COLONIAL') || key.includes('06')) {
+      return sharedBldgMats.VILLA;
+    }
+    if (key.includes('SHOPHOUSE') || key.includes('COMMERCIAL') || key.includes('05')) {
+      return sharedBldgMats.SHOPHOUSE;
+    }
+    return sharedBldgMats.TUBE_HOUSE;
+  }
 
   function registerNightMaterial(mat, isLandmark) {
     if (!mat || nightGlowMats.has(mat)) return;
@@ -649,12 +739,12 @@
               trunkInst.setMatrixAt(tIdx++, dummy.matrix);
             }
             inst.instanceMatrix.needsUpdate = true;
-            inst.computeBoundingSphere(); // Enables hardware frustum culling per 2x2km tile!
+            inst.boundingSphere = new THREE.Sphere(new THREE.Vector3(tile.center_x, 12, tile.center_z), 1500);
             tileTreeGroup.add(inst);
           });
 
           trunkInst.instanceMatrix.needsUpdate = true;
-          trunkInst.computeBoundingSphere();
+          trunkInst.boundingSphere = new THREE.Sphere(new THREE.Vector3(tile.center_x, 12, tile.center_z), 1500);
           tileTreeGroup.add(trunkInst);
           groups.trees.add(tileTreeGroup);
           totalTreesCount += count;
@@ -677,6 +767,23 @@
           const satMesh = groups.satFloor.getObjectByName('sat_' + tile.tile_id);
           if (satMesh) groups.satFloor.remove(satMesh);
 
+          // Auto-align Tile-Local GLBs to World-Space if offset > 500m from tile.center
+          gltf.scene.updateMatrixWorld(true);
+          let refBox = null;
+          gltf.scene.traverse(obj => {
+            if (!refBox && obj.isMesh && classifyMeshLayer(obj.name || '') === 'terrain') {
+              refBox = new THREE.Box3().setFromObject(obj);
+            }
+          });
+          if (!refBox) refBox = new THREE.Box3().setFromObject(gltf.scene);
+          if (!refBox.isEmpty()) {
+            const c = refBox.getCenter(new THREE.Vector3());
+            if (Math.hypot(c.x - tile.center_x, c.z - tile.center_z) > 500) {
+              gltf.scene.position.set(tile.center_x - c.x, 0, tile.center_z - c.z);
+              gltf.scene.updateMatrixWorld(true);
+            }
+          }
+
           const toMove = [];
           gltf.scene.traverse(obj => {
             if (obj.isMesh) {
@@ -685,26 +792,42 @@
               obj.castShadow = (layer === 'buildings');
               obj.receiveShadow = true;
 
-              if (obj.material) {
+              if (layer === 'water') {
+                obj.material = SHARED_WATER_MAT;
+              } else if (obj.material) {
                 const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
-                mats.forEach(m => {
-                  if (m.map) m.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
-                  if (m.name && m.name.toUpperCase().includes('WATER')) {
-                    m.roughness = 0.14;
-                    m.metalness = 0.36;
+                const newMats = mats.map(m => {
+                  if (m.map) {
+                    m.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
+                    if (layer === 'terrain') {
+                      m.map.wrapS = THREE.ClampToEdgeWrapping;
+                      m.map.wrapT = THREE.ClampToEdgeWrapping;
+                      m.map.needsUpdate = true;
+                      m.color.setHex(0xffffff);
+                      m.roughness = 0.96;
+                      m.metalness = 0.0;
+                    } else if (layer === 'buildings') {
+                      m.color.setHex(0xffffff);
+                      registerNightMaterial(m, false);
+                    }
+                    return m;
                   }
-                  if (layer === 'buildings' || layer === 'roads') {
-                    registerNightMaterial(m, false);
+                  if (layer === 'roads') return SHARED_ROAD_MAT;
+                  if (layer === 'buildings') {
+                    const unified = resolveUnifiedBldgMat(obj.name, m.name);
+                    registerNightMaterial(unified, false);
+                    return unified;
                   }
+                  return m;
                 });
+                obj.material = Array.isArray(obj.material) ? newMats : newMats[0];
               }
               toMove.push({ mesh: obj, layer });
             }
           });
 
           toMove.forEach(({ mesh, layer }) => {
-            mesh.updateWorldMatrix(true, false);
-            groups[layer].add(mesh);
+            groups[layer].attach(mesh);
           });
 
           markShadowDirty();
@@ -752,7 +875,15 @@
         gltfLoader.load(
           item.url,
           gltf => {
-            gltf.scene.position.set(anchor.x, 4.2, anchor.z);
+            const groundY = (typeof anchor.ground_y === 'number')
+              ? (anchor.ground_y + (anchor.plinth_offset || 0))
+              : (id.startsWith('cau_') ? 0.4 : 1.5);
+            gltf.scene.position.set(anchor.x, groundY, anchor.z);
+            gltf.scene.updateMatrixWorld(true);
+            const lmBox = new THREE.Box3().setFromObject(gltf.scene);
+            if (!id.startsWith('cau_') && !lmBox.isEmpty() && (lmBox.min.y - groundY) > 0.5) {
+              gltf.scene.position.y -= (lmBox.min.y - groundY);
+            }
             gltf.scene.traverse(obj => {
               if (obj.isMesh) {
                 obj.castShadow = true;
@@ -816,12 +947,15 @@
       const el = document.createElement('div');
       el.className = 'landmark-tag';
       el.textContent = lm.name;
+      el.style.opacity = '0';
+      el.style.pointerEvents = 'none';
       el.addEventListener('click', e => {
         e.stopPropagation();
         flyTo(lm.x, lm.z, Math.max(380, (lm.height_m || 40) * 4.2), (lm.height_m || 20) * 0.35);
       });
       labelsOverlay.appendChild(el);
-      return { lm, el, pos: new THREE.Vector3(lm.x, (lm.height_m || 25) + 18, lm.z), visible: false };
+      const estW = Math.max(96, Math.min(280, (lm.name || '').length * 6.6 + 24));
+      return { lm, el, estW, pos: new THREE.Vector3(lm.x, (lm.height_m || 25) + 18, lm.z), visible: false };
     });
   }
 
@@ -845,18 +979,23 @@
       }
 
       projVec.copy(item.pos).project(camera);
-      if (projVec.z > 1 || projVec.x < -1.05 || projVec.x > 1.05 || projVec.y < -1.05 || projVec.y > 1.05) {
+      if (projVec.z > 1 || projVec.x < -0.96 || projVec.x > 0.96 || projVec.y < -0.94 || projVec.y > 0.92) {
         if (item.visible) { item.el.style.opacity = '0'; item.el.style.pointerEvents = 'none'; item.visible = false; }
         continue;
       }
 
       const sx = (projVec.x * 0.5 + 0.5) * w;
       const sy = (-projVec.y * 0.5 + 0.5) * h;
+      if (sy < 72 || sy > h - 46) {
+        if (item.visible) { item.el.style.opacity = '0'; item.el.style.pointerEvents = 'none'; item.visible = false; }
+        continue;
+      }
 
-      // Smart overlap decluttering so labels never pile up on mobile screens
+      // Smart overlap decluttering using actual estimated label width
       let overlaps = false;
       for (let j = 0; j < placedBoxes.length; j++) {
-        if (Math.abs(sx - placedBoxes[j].x) < 92 && Math.abs(sy - placedBoxes[j].y) < 24) {
+        const pb = placedBoxes[j];
+        if (Math.abs(sx - pb.x) < 0.5 * (item.estW + pb.w) + 8 && Math.abs(sy - pb.y) < 28) {
           overlaps = true;
           break;
         }
@@ -866,7 +1005,7 @@
         continue;
       }
 
-      placedBoxes.push({ x: sx, y: sy });
+      placedBoxes.push({ x: sx, y: sy, w: item.estW });
       item.el.style.transform = `translate3d(${sx.toFixed(1)}px, ${sy.toFixed(1)}px, 0) translate(-50%, -100%)`;
       if (!item.visible) {
         item.el.style.opacity = '1';
@@ -944,7 +1083,7 @@
   }
 
   async function fetchWorldIndex(force = false) {
-    const isLocalNode = location.hostname === '127.0.0.1' || location.hostname === 'localhost';
+    const isLocalNode = (location.hostname === '127.0.0.1' || location.hostname === 'localhost') && location.port === '3000';
     if (isLocalNode) {
       try {
         const r = await fetch('/api/world-index' + (force ? '?refresh=1' : ''), { cache: 'no-cache' });
@@ -966,7 +1105,17 @@
         if (firstLoad) {
           buildLabels(data.landmarks || []);
           const ready = data.tiles.filter(t => t.glb_url);
-          if (ready.length > 0) {
+          if (urlCam) {
+            camState.target.set(urlCam.x, 14, urlCam.z);
+            camState.goalTarget.set(urlCam.x, 14, urlCam.z);
+            camState.dist = urlCam.dist;
+            camState.goalDist = urlCam.dist;
+            camState.yaw = urlCam.yaw;
+            camState.goalYaw = urlCam.yaw;
+            camState.pitch = urlCam.pitch;
+            camState.goalPitch = urlCam.pitch;
+            applyCameraTransform();
+          } else if (ready.length > 0) {
             const first = ready.find(t => t.tile_id === 'T_E00_S00') || ready[0];
             flyTo(first.center_x, first.center_z, deviceProfile.isMobile ? 1950 : 1680, 20);
           }
@@ -1005,6 +1154,9 @@
 
     scene.background.copy(sky);
     scene.fog.color.copy(sky);
+    if (typeof horizonMat !== 'undefined') {
+      horizonMat.color.setHex(0x889484).lerp(sky, 0.35);
+    }
     sunLight.intensity = 0.22 + dayFactor * 1.78;
     hemiLight.intensity = 0.34 + dayFactor * 0.56;
     sunLight.color.setHSL(0.08 + dayFactor * 0.04, 0.7 - dayFactor * 0.55, 0.65 + dayFactor * 0.3);
