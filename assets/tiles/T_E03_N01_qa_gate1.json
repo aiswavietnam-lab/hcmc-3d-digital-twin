@@ -2,66 +2,109 @@
   "schema": "HCMC_QA_GATE1_V1",
   "task_id": "TILE_3D_T_E03_N01",
   "tile_id": "T_E03_N01",
-  "worker_id": "swaB3_e7a2",
-  "audited_at_utc": "2026-11-27T08:57:21Z",
+  "ring": "RING_1",
+  "band": "band_N01",
+  "worker_id": "swaB1_3c6a",
+  "bounds_m": {
+    "x_min": 5000.0,
+    "x_max": 7000.0,
+    "z_min": -3000.0,
+    "z_max": -1000.0
+  },
   "passed": true,
-  "glb_metrics": {
-    "path": "02_ASSETS_3D/ring1_tiles/band_N01/T_E03_N01.glb",
-    "size_bytes": 3445760,
-    "size_mb": 3.286,
-    "budget_max_bytes": 10485760,
-    "sha256": "bd2e95e2f867e6cf200fcc68a30ee62e0b5ac0e895acc228311f7bed5f6f87ec",
+  "tier1_gate": {
+    "passed": true,
+    "glb_size_bytes": 3183772,
     "draw_calls": 8,
-    "budget_max_draw_calls": 8,
-    "total_triangles": 44783,
-    "building_triangles": 30246,
-    "budget_max_building_triangles": 150000,
+    "building_triangles": 28587,
+    "max_seam_error_m": 0.0,
+    "scatter_tree_count": 3946
+  },
+  "tier2_deep_audit": {
+    "passed": true,
+    "glb_size_bytes": 3183772,
+    "glb_size_mb": 3.0363,
+    "glb_sha256": "fb5ed0f143773d50423a7d30dfa6da588bbb52a623b8f27354420bb3d43e5616",
+    "draw_calls": 8,
+    "total_triangles": 44562,
+    "building_triangles": 28587,
     "has_nan_inf": false,
     "bad_normals": 0,
-    "peak_elevation_y_m": 145.631
+    "max_seam_diff_m": 0.0,
+    "floating_building_violations": 0,
+    "min_slope_seating_depth_m": 0.85,
+    "water_road_intrusion_rate_pct": 0.0,
+    "peak_elevation_msl_m": 118.335,
+    "errors": []
   },
-  "seam_lock_gate": {
-    "grid_verts": [
-      65,
-      65
-    ],
-    "step_m": 31.25,
-    "max_seam_error_m": 0.0,
-    "tolerance_m": 0.0,
-    "edge_sha256": "d9f2352ee8983eadfb70eec94cbf0df9e94243802373a217ff641916cb258649"
-  },
-  "slope_seating_and_intrusion_gate": {
-    "min_seating_depth_m": 0.9,
-    "required_min_depth_m": 0.5,
-    "floating_violations": 0,
-    "water_and_road_intrusion_pct": 0.0,
-    "buildings_built": 2481,
-    "landmarks_reserved_skipped": 0,
-    "archetype_breakdown": {
-      "tube_house": 1537,
-      "shophouse": 162,
-      "villa_colonial_modern": 594,
-      "old_apartment": 151,
-      "modern_tower": 37
+  "mesh_breakdown": [
+    {
+      "mesh_name": "MESH_01_TERRAIN",
+      "material": "MAT_01_TERRAIN_SATELLITE",
+      "vertices": 4225,
+      "triangles": 8192
+    },
+    {
+      "mesh_name": "MESH_02_WATER",
+      "material": "MAT_02_SAIGON_RIVER_WATER",
+      "vertices": 317,
+      "triangles": 311
+    },
+    {
+      "mesh_name": "MESH_03_ROAD_METRO",
+      "material": "MAT_03_ROAD_ASPHALT_METRO",
+      "vertices": 9466,
+      "triangles": 7472
+    },
+    {
+      "mesh_name": "MESH_04_TUBE_HOUSE",
+      "material": "MAT_04_TUBE_HOUSE_TERRACOTTA_TIN",
+      "vertices": 30515,
+      "triangles": 15283
+    },
+    {
+      "mesh_name": "MESH_05_SHOPHOUSE",
+      "material": "MAT_05_SHOPHOUSE_COMMERCIAL",
+      "vertices": 4050,
+      "triangles": 2090
+    },
+    {
+      "mesh_name": "MESH_06_VILLA_COLONIAL",
+      "material": "MAT_06_VILLA_COLONIAL_CREAM",
+      "vertices": 18627,
+      "triangles": 7993
+    },
+    {
+      "mesh_name": "MESH_07_APARTMENT_CONCRETE",
+      "material": "MAT_07_APARTMENT_CONCRETE",
+      "vertices": 5075,
+      "triangles": 2723
+    },
+    {
+      "mesh_name": "MESH_08_MODERN_TOWER",
+      "material": "MAT_08_MODERN_TOWER_CURTAINWALL",
+      "vertices": 870,
+      "triangles": 498
     }
+  ],
+  "building_archetype_counts": {
+    "tube_house": 1513,
+    "shophouse": 157,
+    "villa_colonial_modern": 618,
+    "old_apartment": 151,
+    "modern_tower": 7
   },
-  "scatter_trees_gate": {
-    "path": "02_ASSETS_3D/ring1_tiles/band_N01/T_E03_N01_scatter_trees.bin",
+  "scatter_trees": {
     "magic": "HCMC_TR1",
     "version": 1,
-    "instance_count": 2905,
-    "size_bytes": 69736,
-    "sha256": "c702e7b6228e49cf17ec47ed88d7edbd99fc586066b50085fa256b9f01bafc41",
-    "intrusion_rate_pct": 0.0
-  },
-  "preview_contact_sheet": {
-    "path": "04_QA_BUILDS/contact_sheets/TILE_3D_T_E03_N01_preview.jpg",
-    "resolution": [
-      1920,
-      1080
-    ],
-    "format": "JPEG_Q95",
-    "size_bytes": 910924,
-    "sha256": "151d93fcd9466f6fc5b80aea45c3218f54768dcfbefa54db412431caf236510e"
+    "instance_count": 3946,
+    "size_bytes": 94720,
+    "sha256": "aeb357739188caabbafa6de54a4a9c5207e5d2cc7b198127b563500ef5ec3284",
+    "species_breakdown": {
+      "0": 87,
+      "1": 2644,
+      "2": 1006,
+      "3": 209
+    }
   }
 }

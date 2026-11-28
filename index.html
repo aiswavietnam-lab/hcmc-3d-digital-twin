@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>TP.HCM 3D · Studio Bản Sao Số Đa Thiết Bị</title>
-  <link rel="stylesheet" href="./css/style.css?v=2">
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
   <main id="viewport-container" aria-label="Khung cảnh 3D TP.HCM"></main>
@@ -53,23 +53,23 @@
   </div>
 
   <!-- Nút thu gọn Minimap trên điện thoại -->
-  <button id="minimap-fab" class="minimap-fab glass-panel" type="button" title="Mở bản đồ lưới 25 ô">
-    🗺️ <span id="minimap-fab-count">0/25</span>
+  <button id="minimap-fab" class="minimap-fab glass-panel" type="button" title="Mở bản đồ lưới TP.HCM">
+    🗺️ <span id="minimap-fab-count">0/143</span>
   </button>
 
-  <!-- Thẻ Minimap Lưới 25 Ô Ring 1 -->
+  <!-- Thẻ Minimap Lưới Đa Vành Đai -->
   <div id="minimap-card" class="minimap-card glass-panel">
     <div class="minimap-head">
-      <span>Lưới Ring 1 (10×10 km)</span>
+      <span id="minimap-title">Lưới TP.HCM 3D</span>
       <div class="minimap-head-right">
-        <span id="minimap-progress" class="chip">0/25</span>
+        <span id="minimap-progress" class="chip">0/143</span>
         <button id="minimap-close-btn" class="icon-only-btn mobile-only" type="button" aria-label="Thu gọn bản đồ">✕</button>
       </div>
     </div>
     <div id="minimap-grid" class="minimap-grid"></div>
     <div class="minimap-legend">
-      <span><i class="dot ready"></i>Đã có 3D</span>
-      <span><i class="dot locked"></i>Đang dựng</span>
+      <span><i class="dot streamed"></i>Đang nạp</span>
+      <span><i class="dot ready"></i>Sẵn sàng</span>
       <span><i class="dot pending"></i>Chờ</span>
     </div>
   </div>
@@ -160,13 +160,13 @@
           <label class="layer-item"><input type="checkbox" data-layer="buildings" checked><span>Công trình đô thị &amp; Biểu tượng 3D</span></label>
           <label class="layer-item"><input type="checkbox" data-layer="trees" checked><span>Cây xanh 4 loài nhiệt đới (Instanced)</span></label>
           <label class="layer-item"><input type="checkbox" data-layer="satFloor" checked><span>Nền vệ tinh các ô đang chờ</span></label>
-          <label class="layer-item"><input type="checkbox" data-layer="grid"><span>Khung ranh giới 25 ô Ring 1</span></label>
+          <label class="layer-item"><input type="checkbox" data-layer="grid" checked><span>Khung ranh giới các ô quy hoạch</span></label>
           <label class="layer-item"><input type="checkbox" data-layer="labels" checked><span>Nhãn tên Địa danh thông minh</span></label>
         </div>
 
         <h3>Thông số đồ họa thời gian thực</h3>
         <dl class="metrics">
-          <div><dt>Ô 3D đã nạp</dt><dd id="stat-tiles">0</dd></div>
+          <div><dt>Ô 3D trong VRAM</dt><dd id="stat-tiles">0</dd></div>
           <div><dt>Tổng cây 3D</dt><dd id="stat-trees">0</dd></div>
           <div><dt>Lệnh vẽ (Draw Calls)</dt><dd id="stat-calls">0</dd></div>
           <div><dt>Tam giác (Tris)</dt><dd id="stat-tris">0</dd></div>
@@ -177,7 +177,7 @@
         <h3>Công trình biểu tượng TP.HCM</h3>
         <div id="landmarks-list" class="item-list"></div>
 
-        <h3>Danh sách 25 ô quy hoạch Ring 1</h3>
+        <h3 id="tiles-list-heading">Danh sách ô quy hoạch TP.HCM</h3>
         <div id="tiles-list" class="item-list"></div>
       </section>
     </div>
@@ -191,6 +191,6 @@
 
   <script src="./js/vendor/three.min.js"></script>
   <script src="./js/vendor/GLTFLoader.js"></script>
-  <script src="./js/hcmc_viewer.js?v=2"></script>
+  <script src="./js/hcmc_viewer.js"></script>
 </body>
 </html>

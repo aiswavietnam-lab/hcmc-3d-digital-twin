@@ -547,7 +547,7 @@ input[type="range"] {
   position: fixed;
   left: calc(12px + var(--safe-left));
   bottom: calc(48px + var(--safe-bottom));
-  width: 224px;
+  width: 248px;
   padding: 10px;
   z-index: 21;
   transition: transform 0.22s ease, opacity 0.22s ease;
@@ -567,26 +567,42 @@ input[type="range"] {
 }
 .minimap-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 4px;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 2.5px;
+}
+.minimap-grid.dense .mini-cell {
+  border-radius: 3px;
+  font-size: 0;
+  min-height: 14px;
 }
 .mini-cell {
   aspect-ratio: 1;
-  border-radius: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
   background: var(--pending);
-  font-size: 8.5px;
+  font-size: 8px;
   font-weight: 600;
   display: grid;
   place-items: center;
   cursor: pointer;
   color: rgba(255, 255, 255, 0.88);
   padding: 0;
+  transition: transform 0.12s ease, background 0.2s ease, border-color 0.2s ease;
 }
-.mini-cell.ready { background: rgba(16, 185, 129, 0.48); border-color: #10b981; }
+.mini-cell.empty {
+  opacity: 0;
+  pointer-events: none;
+}
+.mini-cell.ready { background: rgba(56, 189, 248, 0.28); border-color: rgba(56, 189, 248, 0.55); }
+.mini-cell.ring1.ready { border-color: rgba(16, 185, 129, 0.78); }
+.mini-cell.streamed {
+  background: rgba(16, 185, 129, 0.88) !important;
+  border-color: #6ee7b7 !important;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.5);
+}
 .mini-cell.locked { background: rgba(245, 158, 11, 0.44); border-color: #f59e0b; }
-.mini-cell.current { outline: 2px solid #38bdf8; outline-offset: 1px; }
-.mini-cell:hover { transform: scale(1.06); border-color: #fff; }
+.mini-cell.current { outline: 2px solid #f8fafc; outline-offset: 1px; z-index: 2; }
+.mini-cell:hover { transform: scale(1.2); border-color: #fff; z-index: 3; }
 .minimap-legend {
   display: flex;
   justify-content: space-between;
@@ -595,7 +611,8 @@ input[type="range"] {
   color: var(--muted);
 }
 .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 4px; }
-.dot.ready { background: var(--ready); }
+.dot.streamed { background: #10b981; box-shadow: 0 0 5px #10b981; }
+.dot.ready { background: #38bdf8; }
 .dot.locked { background: var(--locked); }
 .dot.pending { background: #64748b; }
 
@@ -626,9 +643,6 @@ input[type="range"] {
 }
 
 /* ==================== VIRTUAL DRONE FLYPAD (TOUCH) ==================== */
-.virtual-flypad[hidden] {
-  display: none !important;
-}
 .virtual-flypad {
   position: fixed;
   left: calc(16px + var(--safe-left));

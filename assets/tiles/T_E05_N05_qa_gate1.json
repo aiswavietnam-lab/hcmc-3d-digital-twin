@@ -1,0 +1,82 @@
+{
+  "schema": "HCMC_QA_GATE1_V2_RING2",
+  "project_name": "HCMC_3D_DIGITAL_TWIN",
+  "ring": "RING_2",
+  "tile_id": "T_E05_N05",
+  "task_id": "TILE_3D_R2_T_E05_N05",
+  "worker_id": "u20x_U08_1367",
+  "checked_at_utc": "2026-11-27T16:51:26Z",
+  "passed": true,
+  "max_seam_error_m": 0.0,
+  "seam_errors_by_edge_m": {
+    "north_z_min": 0.0,
+    "south_z_max": 0.0,
+    "west_x_min": 0.0,
+    "east_x_max": 0.0,
+    "edge_sha256": "a4a0760b7afc89deaf240098a2aa13f14ddef495027a2afd8cff167dc65bdcca"
+  },
+  "seam_lock_details": {
+    "north_edge_error_m": 0.0,
+    "south_edge_error_m": 0.0,
+    "west_edge_error_m": 0.0,
+    "east_edge_error_m": 0.0,
+    "grid_shape": [
+      65,
+      65
+    ],
+    "step_m": 31.25,
+    "edge_sha256": "a4a0760b7afc89deaf240098a2aa13f14ddef495027a2afd8cff167dc65bdcca"
+  },
+  "metrics": {
+    "glb_size_bytes": 3327180,
+    "glb_size_mb": 3.173,
+    "draw_calls": 8,
+    "terrain_vertices": 4225,
+    "building_count": 3352,
+    "building_triangles": 43120,
+    "total_triangles": 56451,
+    "nan_inf_count": 0,
+    "min_slope_seating_depth_m": 0.85,
+    "water_intrusion_count": 0,
+    "road_intrusion_count": 0,
+    "water_intrusion_pct": 0.0,
+    "road_intrusion_pct": 0.0,
+    "scatter_trees_count": 2908,
+    "scatter_trees_size_bytes": 69808
+  },
+  "glb_metrics": {
+    "size_bytes": 3327180,
+    "max_allowed_bytes": 10485760,
+    "draw_calls": 8,
+    "max_allowed_draw_calls": 8,
+    "building_count": 3352,
+    "building_triangles": 43120,
+    "max_allowed_building_triangles": 150000,
+    "total_triangles": 56451,
+    "nan_inf_count": 0,
+    "water_level_msl_m": 0.4,
+    "min_seating_depth_m": 0.85,
+    "water_intrusion_ratio": 0.0,
+    "road_intrusion_ratio": 0.0
+  },
+  "scatter_trees_metrics": {
+    "magic": "HCMC_TR1",
+    "version": 1,
+    "tree_count": 2908,
+    "size_bytes": 69808,
+    "nan_inf_count": 0,
+    "intrusion_count": 0
+  },
+  "checks": {
+    "seam_lock_0_000m": true,
+    "terrain_65x65_step_31_25m": true,
+    "glb_size_le_10mb": true,
+    "glb_mcp_safe_le_6_8mb": true,
+    "building_tris_le_150k": true,
+    "draw_calls_le_8": true,
+    "zero_nan_inf": true,
+    "seating_depth_ge_0_50m": true,
+    "zero_water_and_road_intrusion": true,
+    "scatter_trees_bin_valid": true
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "HCMC_QA_GATE1_V2_RING2",
+  "tile_id": "T_W05_S00",
+  "task_id": "TILE_3D_R2_T_W05_S00",
+  "worker_id": "u20x_U02_eb1d",
+  "checked_at_utc": "2026-11-27T18:15:14Z",
+  "passed": true,
+  "max_seam_error_m": 0.0,
+  "seam_errors_by_edge_m": {
+    "north_z_min": 0.0,
+    "south_z_max": 0.0,
+    "west_x_min": 0.0,
+    "east_x_max": 0.0,
+    "edge_sha256": "b30d311837ffa8c9c17c3bed105767dfcbcf0f826d9adcb8803931caec4d492f"
+  },
+  "metrics": {
+    "glb_size_bytes": 6775792,
+    "glb_size_mb": 6.4619,
+    "draw_calls": 7,
+    "terrain_vertices": 4225,
+    "building_triangles": 76011,
+    "total_triangles": 92223,
+    "nan_inf_count": 0,
+    "min_slope_seating_depth_m": 0.85,
+    "water_intrusion_count": 0,
+    "road_intrusion_count": 0,
+    "water_intrusion_pct": 0.0,
+    "road_intrusion_pct": 0.0,
+    "scatter_trees_count": 2196,
+    "scatter_trees_size_bytes": 52720
+  },
+  "checks": {
+    "seam_lock_0_000m": true,
+    "terrain_65x65_step_31_25m": true,
+    "glb_size_le_10mb": true,
+    "glb_mcp_safe_le_6_8mb": true,
+    "building_tris_le_150k": true,
+    "draw_calls_le_8": true,
+    "zero_nan_inf": true,
+    "seating_depth_ge_0_50m": true,
+    "zero_water_and_road_intrusion": true,
+    "scatter_trees_bin_valid": true
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "HCMC_QA_GATE1_V1",
+  "project_name": "HCMC_3D_DIGITAL_TWIN",
+  "ring": "RING_2",
+  "task_id": "TILE_3D_R2_T_W05_N02",
+  "tile_id": "T_W05_N02",
+  "worker_id": "u20x_U12_e65c",
+  "checked_at_utc": "2026-11-27T18:08:59Z",
+  "passed": true,
+  "max_seam_error_m": 0.0,
+  "seam_lock_details": {
+    "north_edge_error_m": 0.0,
+    "south_edge_error_m": 0.0,
+    "west_edge_error_m": 0.0,
+    "east_edge_error_m": 0.0,
+    "grid_shape": [
+      65,
+      65
+    ],
+    "step_m": 31.25,
+    "edge_sha256": "51b0f3300fa7f0fe36c90fcf6620b98ef49fa487e1214ca080dd3466a8f016f9"
+  },
+  "glb_metrics": {
+    "size_bytes": 5156408,
+    "max_allowed_bytes": 10485760,
+    "draw_calls": 8,
+    "max_allowed_draw_calls": 8,
+    "building_count": 4980,
+    "building_triangles": 71613,
+    "max_allowed_building_triangles": 150000,
+    "total_triangles": 85181,
+    "nan_inf_count": 0,
+    "water_level_msl_m": 0.4,
+    "min_seating_depth_m": 0.85,
+    "water_intrusion_ratio": 0.0,
+    "road_intrusion_ratio": 0.0
+  },
+  "scatter_trees_metrics": {
+    "magic": "HCMC_TR1",
+    "version": 1,
+    "tree_count": 4500,
+    "size_bytes": 108016,
+    "nan_inf_count": 0,
+    "intrusion_count": 0
+  }
+}

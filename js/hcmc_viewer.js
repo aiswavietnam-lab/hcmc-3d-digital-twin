@@ -101,7 +101,7 @@
   scene.background = new THREE.Color(0xd99b66);
   scene.fog = new THREE.FogExp2(0xd99b66, 0.000168);
 
-  const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 2.5, 30000);
+  const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 2.5, 45000);
 
   // Studio Lighting (Full 2048x2048 Soft Shadows preserved 100%)
   const hemiLight = new THREE.HemisphereLight(0xdbeafe, 0x334155, 0.68);
@@ -162,52 +162,20 @@
     buildings: true,
     trees: true,
     satFloor: true,
-    grid: false,
+    grid: true,
     labels: true,
   };
-  groups.grid.visible = false;
-
-  // Neutral soft horizon base plane outside Ring 1 (prevents jarring brown background gaps)
-  const horizonGeo = new THREE.PlaneGeometry(80000, 80000);
-  const horizonMat = new THREE.MeshStandardMaterial({
-    color: 0x9aa698,
-    roughness: 0.98,
-    metalness: 0.0,
-  });
-  const horizonFloor = new THREE.Mesh(horizonGeo, horizonMat);
-  horizonFloor.rotation.x = -Math.PI / 2;
-  horizonFloor.position.set(2000, -2.6, 2000);
-  horizonFloor.receiveShadow = true;
-  scene.add(horizonFloor);
 
   // ==================== 3. BUTTER-SMOOTH INERTIAL CAMERA RIG ====================
-  const urlCam = (() => {
-    try {
-      const q = new URLSearchParams(location.search).get('cam');
-      if (!q) return null;
-      const parts = q.split(',').map(Number);
-      if (parts.length >= 3 && parts.every(Number.isFinite)) {
-        return {
-          x: parts[0],
-          z: parts[1],
-          dist: parts[2],
-          yaw: Number.isFinite(parts[3]) ? parts[3] : -0.68,
-          pitch: Number.isFinite(parts[4]) ? parts[4] : 0.44,
-        };
-      }
-    } catch (_) {}
-    return null;
-  })();
-
   const camState = {
-    target: new THREE.Vector3(urlCam ? urlCam.x : 450, 14, urlCam ? urlCam.z : 250),
-    goalTarget: new THREE.Vector3(urlCam ? urlCam.x : 450, 14, urlCam ? urlCam.z : 250),
-    yaw: urlCam ? urlCam.yaw : -0.68,
-    goalYaw: urlCam ? urlCam.yaw : -0.68,
-    pitch: urlCam ? urlCam.pitch : 0.44,
-    goalPitch: urlCam ? urlCam.pitch : 0.44,
-    dist: urlCam ? urlCam.dist : 2100,
-    goalDist: urlCam ? urlCam.dist : 2100,
+    target: new THREE.Vector3(450, 14, 250),
+    goalTarget: new THREE.Vector3(450, 14, 250),
+    yaw: -0.68,
+    goalYaw: -0.68,
+    pitch: 0.44,
+    goalPitch: 0.44,
+    dist: 2100,
+    goalDist: 2100,
     flyAnim: null,
     dampingStrength: 11.5, // Controlled by UI smoothness slider
   };
@@ -218,11 +186,12 @@
   const groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -2.5);
   const tmpVec2 = new THREE.Vector2();
   const tmpHit = new THREE.Vector3();
+  const worldBounds = { minX: -14000, maxX: 18000, minZ: -14000, maxZ: 18000 };
 
   function clampTargetBounds(v) {
-    v.x = Math.max(-14000, Math.min(18000, v.x));
+    v.x = Math.max(worldBounds.minX, Math.min(worldBounds.maxX, v.x));
     v.y = Math.max(-2, Math.min(600, v.y));
-    v.z = Math.max(-14000, Math.min(18000, v.z));
+    v.z = Math.max(worldBounds.minZ, Math.min(worldBounds.maxZ, v.z));
   }
 
   function applyCameraTransform() {
@@ -246,7 +215,7 @@
       startTarget: camState.target.clone(),
       endTarget: new THREE.Vector3(x, y, z),
       startDist: camState.dist,
-      endDist: Math.max(45, Math.min(14000, dist)),
+      endDist: Math.max(45, Math.min(26000, dist)),
       startPitch: camState.pitch,
       endPitch: pitch,
       elapsed: 0,
@@ -281,7 +250,7 @@
   function zoomTowardScreenPoint(scaleFactor, clientX, clientY) {
     cancelFlyAnim();
     const prevDist = camState.goalDist;
-    const nextDist = Math.max(38, Math.min(14500, prevDist * scaleFactor));
+    const nextDist = Math.max(38, Math.min(26000, prevDist * scaleFactor));
     const zoomRatio = 1 - nextDist / prevDist;
 
     if (Math.abs(zoomRatio) > 0.0001) {
@@ -467,10 +436,8 @@
   const joyKnob = document.getElementById('joy-move-knob');
 
   if (flypadBtn && flypadEl) {
-    flypadEl.style.display = flypadEl.hidden ? 'none' : 'flex';
     flypadBtn.addEventListener('click', () => {
       flypadEl.hidden = !flypadEl.hidden;
-      flypadEl.style.display = flypadEl.hidden ? 'none' : 'flex';
       flypadBtn.classList.toggle('active', !flypadEl.hidden);
     });
   }
@@ -556,62 +523,6 @@
   const nightGlowMats = new Set();
   let currentNightFactor = 0.38;
 
-  // Unified city-wide PBR materials (eliminates inter-tile color/water seam steps)
-  const SHARED_WATER_MAT = new THREE.MeshStandardMaterial({
-    name: 'MAT_02_SAIGON_RIVER_WATER',
-    color: 0x2f7484,
-    roughness: 0.18,
-    metalness: 0.30,
-    transparent: false,
-    polygonOffset: true,
-    polygonOffsetFactor: -1,
-    polygonOffsetUnits: -1,
-  });
-
-  const SHARED_ROAD_MAT = new THREE.MeshStandardMaterial({
-    name: 'MAT_03_ROAD_ASPHALT_METRO',
-    color: 0x4b535e,
-    roughness: 0.88,
-    metalness: 0.06,
-    polygonOffset: true,
-    polygonOffsetFactor: -1,
-    polygonOffsetUnits: -1,
-  });
-
-  const UNIFIED_BLDG_PALETTE = {
-    TUBE_HOUSE: { color: 0xdccbb6, roughness: 0.86, metalness: 0.04 },
-    SHOPHOUSE: { color: 0xe6d8c3, roughness: 0.82, metalness: 0.06 },
-    VILLA: { color: 0xefe7d8, roughness: 0.80, metalness: 0.05 },
-    APARTMENT: { color: 0xcfd6de, roughness: 0.84, metalness: 0.08 },
-    MODERN_TOWER: { color: 0x6c9cc2, roughness: 0.24, metalness: 0.52 },
-  };
-  const sharedBldgMats = {};
-  Object.entries(UNIFIED_BLDG_PALETTE).forEach(([k, spec]) => {
-    sharedBldgMats[k] = new THREE.MeshStandardMaterial({
-      name: 'MAT_UNIFIED_' + k,
-      color: spec.color,
-      roughness: spec.roughness,
-      metalness: spec.metalness,
-    });
-  });
-
-  function resolveUnifiedBldgMat(meshName, matName) {
-    const key = ((meshName || '') + ' ' + (matName || '')).toUpperCase();
-    if (key.includes('MODERN') || key.includes('TOWER') || key.includes('CURTAIN') || key.includes('08')) {
-      return sharedBldgMats.MODERN_TOWER;
-    }
-    if (key.includes('APARTMENT') || key.includes('CONCRETE') || key.includes('07')) {
-      return sharedBldgMats.APARTMENT;
-    }
-    if (key.includes('VILLA') || key.includes('COLONIAL') || key.includes('06')) {
-      return sharedBldgMats.VILLA;
-    }
-    if (key.includes('SHOPHOUSE') || key.includes('COMMERCIAL') || key.includes('05')) {
-      return sharedBldgMats.SHOPHOUSE;
-    }
-    return sharedBldgMats.TUBE_HOUSE;
-  }
-
   function registerNightMaterial(mat, isLandmark) {
     if (!mat || nightGlowMats.has(mat)) return;
     const nm = (mat.name || '').toUpperCase();
@@ -638,11 +549,11 @@
     nightGlowMats.forEach(applyMaterialNightGlow);
   }
 
-  // Priority Tile Queue (Max 3 concurrent downloads, closest to camera target first, 1-frame yield per parse)
+  // Dynamic Radius Streaming + VRAM Governor (Keeps nearby ~16-30 tiles in GPU VRAM, disposes distant tiles smoothly)
   const MAX_CONCURRENT_TILE_LOADS = 3;
   const tileQueue = [];
   const queuedIds = new Set();
-  const loadedTiles = new Map();
+  const loadedTiles = new Map(); // tile_id -> { tile, meshes, treeGroup, treeCount, lastUsedAt, disposed }
   let activeLoads = 0;
   const satTilesLoaded = new Set();
   let worldData = null;
@@ -652,6 +563,17 @@
   const gltfLoader = new THREE.GLTFLoader();
   const texLoader = new THREE.TextureLoader();
 
+  function getStreamBudget() {
+    const mobile = deviceProfile.isMobile;
+    const zoomExpand = Math.min(2400, Math.max(0, (camState.goalDist - 3500) * 0.25));
+    return {
+      maxActiveTiles: mobile ? 16 : 30,
+      streamRadiusM: (mobile ? 5600 : 7800) + zoomExpand * 0.5,
+      unloadRadiusM: (mobile ? 7800 : 10800) + zoomExpand * 0.8,
+      satRadiusM: (mobile ? 8500 : 12200) + zoomExpand,
+    };
+  }
+
   function classifyMeshLayer(meshName) {
     const u = (meshName || '').toUpperCase();
     if (u.includes('TERRAIN')) return 'terrain';
@@ -660,30 +582,159 @@
     return 'buildings';
   }
 
+  function removeSatPlaneForTile(tileId) {
+    const satMesh = groups.satFloor.getObjectByName('sat_' + tileId);
+    if (satMesh) {
+      groups.satFloor.remove(satMesh);
+      if (satMesh.geometry) satMesh.geometry.dispose();
+      if (satMesh.material) {
+        if (satMesh.material.map) satMesh.material.map.dispose();
+        satMesh.material.dispose();
+      }
+    }
+    satTilesLoaded.delete(tileId);
+  }
+
+  function ensureSatPlaneForTile(tile) {
+    if (!tile || !tile.satellite_url || loadedTiles.has(tile.tile_id) || satTilesLoaded.has(tile.tile_id)) return;
+    const tsize = tile.tile_size_m || (tile.bounds ? tile.bounds.x_max - tile.bounds.x_min : 2000);
+    satTilesLoaded.add(tile.tile_id);
+    texLoader.load(
+      tile.satellite_url,
+      tex => {
+        if (loadedTiles.has(tile.tile_id) || !satTilesLoaded.has(tile.tile_id)) {
+          tex.dispose();
+          return;
+        }
+        tex.encoding = THREE.sRGBEncoding;
+        const plane = new THREE.Mesh(
+          new THREE.PlaneGeometry(tsize, tsize),
+          new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.52 })
+        );
+        plane.name = 'sat_' + tile.tile_id;
+        plane.rotation.x = -Math.PI / 2;
+        plane.position.set(tile.center_x, 0.2, tile.center_z);
+        groups.satFloor.add(plane);
+      },
+      undefined,
+      () => { satTilesLoaded.delete(tile.tile_id); }
+    );
+  }
+
+  function disposeTileFromVRAM(tileId) {
+    const entry = loadedTiles.get(tileId);
+    if (!entry) return;
+    entry.disposed = true;
+    entry.meshes.forEach(mesh => {
+      if (mesh.parent) mesh.parent.remove(mesh);
+      if (mesh.geometry) mesh.geometry.dispose();
+      const mats = Array.isArray(mesh.material) ? mesh.material : (mesh.material ? [mesh.material] : []);
+      mats.forEach(m => {
+        if (!m) return;
+        ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'emissiveMap', 'aoMap'].forEach(k => {
+          if (m[k] && typeof m[k].dispose === 'function') m[k].dispose();
+        });
+        nightGlowMats.delete(m);
+        m.dispose();
+      });
+    });
+    if (entry.treeGroup) {
+      if (entry.treeGroup.parent) entry.treeGroup.parent.remove(entry.treeGroup);
+      entry.treeGroup.traverse(obj => {
+        if (obj.isInstancedMesh) obj.dispose();
+      });
+      totalTreesCount = Math.max(0, totalTreesCount - (entry.treeCount || 0));
+      const treesEl = document.getElementById('stat-trees');
+      if (treesEl) treesEl.textContent = totalTreesCount.toLocaleString('vi-VN');
+    }
+    loadedTiles.delete(tileId);
+    ensureSatPlaneForTile(entry.tile);
+    markShadowDirty();
+  }
+
   function updateStreamBanner() {
     if (!worldData) return;
-    const totalReady = worldData.tiles.filter(t => t.glb_url).length;
-    const done = loadedTiles.size;
-    if (done >= totalReady || totalReady === 0) {
+    const totalPendingOrActive = loadedTiles.size + tileQueue.length + activeLoads;
+    if (tileQueue.length === 0 && activeLoads === 0) {
       streamProgressWrap.hidden = true;
       return;
     }
     streamProgressWrap.hidden = false;
-    const pct = Math.round((done / totalReady) * 100);
+    const pct = totalPendingOrActive > 0 ? Math.round((loadedTiles.size / totalPendingOrActive) * 100) : 100;
     streamProgressBar.style.width = pct + '%';
-    streamProgressText.textContent = `Đang nạp mượt ${done}/${totalReady} ô 3D (${pct}%)`;
+    streamProgressText.textContent = `Đang nạp vùng nhìn (${loadedTiles.size} ô 3D · chờ ${tileQueue.length + activeLoads}) ${pct}%`;
   }
 
   function enqueueTileLoad(tile) {
     if (!tile.glb_url || loadedTiles.has(tile.tile_id) || queuedIds.has(tile.tile_id)) return;
     queuedIds.add(tile.tile_id);
     tileQueue.push(tile);
+  }
+
+  function updateDynamicStreaming() {
+    if (!worldData || !worldData.tiles) return;
+    const budget = getStreamBudget();
+    const tx = camState.goalTarget.x;
+    const tz = camState.goalTarget.z;
+
+    // 1. Unload distant tiles beyond unloadRadiusM cleanly to protect mobile/desktop VRAM
+    const toUnload = [];
+    loadedTiles.forEach((entry, tid) => {
+      const d = Math.hypot(entry.tile.center_x - tx, entry.tile.center_z - tz);
+      if (d > budget.unloadRadiusM) {
+        toUnload.push({ tid, d });
+      }
+    });
+    toUnload.forEach(item => disposeTileFromVRAM(item.tid));
+
+    // 2. Gather ready tiles sorted by distance to camera target
+    const candidates = [];
+    for (let i = 0; i < worldData.tiles.length; i++) {
+      const t = worldData.tiles[i];
+      const d = Math.hypot(t.center_x - tx, t.center_z - tz);
+      if (t.glb_url && d <= budget.streamRadiusM) {
+        candidates.push({ t, d });
+      }
+      if (!loadedTiles.has(t.tile_id)) {
+        if (d <= budget.satRadiusM) ensureSatPlaneForTile(t);
+        else removeSatPlaneForTile(t.tile_id);
+      }
+    }
+    candidates.sort((a, b) => a.d - b.d);
+
+    // Trim queue of tiles that drifted out of unloadRadiusM
+    for (let i = tileQueue.length - 1; i >= 0; i--) {
+      const qt = tileQueue[i];
+      if (Math.hypot(qt.center_x - tx, qt.center_z - tz) > budget.unloadRadiusM) {
+        queuedIds.delete(qt.tile_id);
+        tileQueue.splice(i, 1);
+      }
+    }
+
+    const desired = candidates.slice(0, budget.maxActiveTiles);
+    // If loadedTiles still exceeds budget, evict the farthest loaded tiles first
+    if (loadedTiles.size + desired.filter(c => !loadedTiles.has(c.t.tile_id)).length > budget.maxActiveTiles) {
+      const loadedRanked = Array.from(loadedTiles.values())
+        .map(e => ({ tid: e.tile.tile_id, d: Math.hypot(e.tile.center_x - tx, e.tile.center_z - tz) }))
+        .sort((a, b) => b.d - a.d);
+      while (loadedTiles.size >= budget.maxActiveTiles && loadedRanked.length > 0) {
+        const far = loadedRanked.shift();
+        if (far.d > (desired[desired.length - 1]?.d || 0) + 500) {
+          disposeTileFromVRAM(far.tid);
+        } else {
+          break;
+        }
+      }
+    }
+
+    desired.forEach(({ t }) => enqueueTileLoad(t));
     pumpTileQueue();
+    updateMinimapHighlight();
   }
 
   function pumpTileQueue() {
-    while (activeLoads < MAX_CONCURRENT_TILE_LOADS && tileQueue.length > 0) {
-      // Always pick the tile closest to where the user is currently looking!
+    const budget = getStreamBudget();
+    while (activeLoads < MAX_CONCURRENT_TILE_LOADS && tileQueue.length > 0 && loadedTiles.size + activeLoads < budget.maxActiveTiles) {
       tileQueue.sort((a, b) => {
         const da = Math.hypot(a.center_x - camState.goalTarget.x, a.center_z - camState.goalTarget.z);
         const db = Math.hypot(b.center_x - camState.goalTarget.x, b.center_z - camState.goalTarget.z);
@@ -700,7 +751,8 @@
     fetch(tile.scatter_url)
       .then(r => (r.ok ? r.arrayBuffer() : null))
       .then(buf => {
-        if (!buf || buf.byteLength < 16) return;
+        const currentEntry = loadedTiles.get(tile.tile_id);
+        if (!currentEntry || currentEntry.disposed || !buf || buf.byteLength < 16) return;
         const dv = new DataView(buf);
         const count = dv.getUint32(12, true);
         if (!count || buf.byteLength < 16 + count * 24) return;
@@ -717,11 +769,15 @@
         }
 
         requestAnimationFrame(() => {
+          const liveEntry = loadedTiles.get(tile.tile_id);
+          if (!liveEntry || liveEntry.disposed) return;
+
           const dummy = new THREE.Object3D();
           const tileTreeGroup = new THREE.Group();
           const trunkInst = new THREE.InstancedMesh(treeTrunkGeo, sharedTrunkMat, count);
           trunkInst.castShadow = false;
           trunkInst.receiveShadow = false;
+          trunkInst.frustumCulled = false;
           let tIdx = 0;
 
           bySpecies.forEach((arr, sp) => {
@@ -729,6 +785,7 @@
             const inst = new THREE.InstancedMesh(treeCanopyGeo, sharedCanopyMats[sp], arr.length);
             inst.castShadow = false;
             inst.receiveShadow = false;
+            inst.frustumCulled = false;
             for (let idx = 0; idx < arr.length; idx++) {
               const t = arr[idx];
               dummy.position.set(t.x, t.y, t.z);
@@ -739,14 +796,14 @@
               trunkInst.setMatrixAt(tIdx++, dummy.matrix);
             }
             inst.instanceMatrix.needsUpdate = true;
-            inst.boundingSphere = new THREE.Sphere(new THREE.Vector3(tile.center_x, 12, tile.center_z), 1500);
             tileTreeGroup.add(inst);
           });
 
           trunkInst.instanceMatrix.needsUpdate = true;
-          trunkInst.boundingSphere = new THREE.Sphere(new THREE.Vector3(tile.center_x, 12, tile.center_z), 1500);
           tileTreeGroup.add(trunkInst);
           groups.trees.add(tileTreeGroup);
+          liveEntry.treeGroup = tileTreeGroup;
+          liveEntry.treeCount = count;
           totalTreesCount += count;
           document.getElementById('stat-trees').textContent = totalTreesCount.toLocaleString('vi-VN');
         });
@@ -759,80 +816,74 @@
     gltfLoader.load(
       tile.glb_url,
       gltf => {
-        // Yield 1 animation frame so pointer/touch drag stays silky 60/120fps during heavy scene insertion
         requestAnimationFrame(() => {
           activeLoads--;
-          loadedTiles.set(tile.tile_id, true);
+          queuedIds.delete(tile.tile_id);
 
-          const satMesh = groups.satFloor.getObjectByName('sat_' + tile.tile_id);
-          if (satMesh) groups.satFloor.remove(satMesh);
-
-          // Auto-align Tile-Local GLBs to World-Space if offset > 500m from tile.center
-          gltf.scene.updateMatrixWorld(true);
-          let refBox = null;
-          gltf.scene.traverse(obj => {
-            if (!refBox && obj.isMesh && classifyMeshLayer(obj.name || '') === 'terrain') {
-              refBox = new THREE.Box3().setFromObject(obj);
-            }
-          });
-          if (!refBox) refBox = new THREE.Box3().setFromObject(gltf.scene);
-          if (!refBox.isEmpty()) {
-            const c = refBox.getCenter(new THREE.Vector3());
-            if (Math.hypot(c.x - tile.center_x, c.z - tile.center_z) > 500) {
-              gltf.scene.position.set(tile.center_x - c.x, 0, tile.center_z - c.z);
-              gltf.scene.updateMatrixWorld(true);
-            }
+          const budget = getStreamBudget();
+          const d = Math.hypot(tile.center_x - camState.goalTarget.x, tile.center_z - camState.goalTarget.z);
+          if (d > budget.unloadRadiusM + 1000) {
+            // Camera teleported away mid-download; dispose immediately without polluting VRAM
+            gltf.scene.traverse(obj => {
+              if (obj.isMesh) {
+                if (obj.geometry) obj.geometry.dispose();
+                const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+                mats.forEach(m => m && m.dispose());
+              }
+            });
+            pumpTileQueue();
+            return;
           }
 
+          if (loadedTiles.has(tile.tile_id)) {
+            pumpTileQueue();
+            return;
+          }
+
+          removeSatPlaneForTile(tile.tile_id);
           const toMove = [];
           gltf.scene.traverse(obj => {
             if (obj.isMesh) {
               const layer = classifyMeshLayer(obj.name || (obj.parent && obj.parent.name) || '');
-              // Zero-quality-loss Shadow Optimization: only buildings cast shadows; terrain/roads/water receive shadows!
               obj.castShadow = (layer === 'buildings');
               obj.receiveShadow = true;
 
-              if (layer === 'water') {
-                obj.material = SHARED_WATER_MAT;
-              } else if (obj.material) {
+              if (obj.material) {
                 const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
-                const newMats = mats.map(m => {
-                  if (m.map) {
-                    m.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
-                    if (layer === 'terrain') {
-                      m.map.wrapS = THREE.ClampToEdgeWrapping;
-                      m.map.wrapT = THREE.ClampToEdgeWrapping;
-                      m.map.needsUpdate = true;
-                      m.color.setHex(0xffffff);
-                      m.roughness = 0.96;
-                      m.metalness = 0.0;
-                    } else if (layer === 'buildings') {
-                      m.color.setHex(0xffffff);
-                      registerNightMaterial(m, false);
-                    }
-                    return m;
+                mats.forEach(m => {
+                  if (m.map) m.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
+                  if (m.name && m.name.toUpperCase().includes('WATER')) {
+                    m.roughness = 0.14;
+                    m.metalness = 0.36;
                   }
-                  if (layer === 'roads') return SHARED_ROAD_MAT;
-                  if (layer === 'buildings') {
-                    const unified = resolveUnifiedBldgMat(obj.name, m.name);
-                    registerNightMaterial(unified, false);
-                    return unified;
+                  if (layer === 'buildings' || layer === 'roads') {
+                    registerNightMaterial(m, false);
                   }
-                  return m;
                 });
-                obj.material = Array.isArray(obj.material) ? newMats : newMats[0];
               }
               toMove.push({ mesh: obj, layer });
             }
           });
 
+          const entry = {
+            tile,
+            meshes: [],
+            treeGroup: null,
+            treeCount: 0,
+            lastUsedAt: performance.now(),
+            disposed: false,
+          };
           toMove.forEach(({ mesh, layer }) => {
-            groups[layer].attach(mesh);
+            mesh.updateWorldMatrix(true, false);
+            groups[layer].add(mesh);
+            entry.meshes.push(mesh);
           });
+          loadedTiles.set(tile.tile_id, entry);
 
           markShadowDirty();
           loadScatterBin(tile);
           updateStatsUI();
+          updateMinimapHighlight();
           pumpTileQueue();
         });
       },
@@ -845,15 +896,23 @@
     );
   }
 
-  // Fallback anchors for extra Landmark GLBs not yet listed in world-index.landmarks
+  // Fallback anchors covering Ring 1 extras + all 8 Ring 2 landmarks
   const EXTRA_LANDMARK_ANCHORS = {
-    saigon_centre_takashimaya: { id: 'saigon_centre_takashimaya', name: 'Saigon Centre (Takashimaya)', tile_id: 'T_E00_S00', x: 165.0, z: 685.0, height_m: 193.7 },
-    times_square_nguyen_hue: { id: 'times_square_nguyen_hue', name: 'Times Square Nguyễn Huệ', tile_id: 'T_E00_S00', x: 545.0, z: 595.0, height_m: 165.0 },
-    vinhomes_central_park_cluster: { id: 'vinhomes_central_park_cluster', name: 'Quần thể Vinhomes Central Park', tile_id: 'T_E01_N01', x: 2380.0, z: -1580.0, height_m: 185.0 },
-    cau_mong_heritage: { id: 'cau_mong_heritage', name: 'Cầu Móng Lịch sử', tile_id: 'T_E00_S01', x: 530.0, z: 1180.0, height_m: 10.0 },
-    metro_line1_elevated_stations_viaduct: { id: 'metro_line1_elevated_stations_viaduct', name: 'Ga Trên Cao Tuyến Metro Số 1', tile_id: 'T_E02_N01', x: 3180.0, z: -2150.0, height_m: 22.0 },
-    thuthiem_exhibition_and_tower: { id: 'thuthiem_exhibition_and_tower', name: 'Trung tâm Triển lãm & Tháp Thủ Thiêm', tile_id: 'T_E01_S00', x: 1580.0, z: 620.0, height_m: 85.0 },
-    crescent_mall_secc_pmh: { id: 'crescent_mall_secc_pmh', name: 'Crescent Mall & SECC Phú Mỹ Hưng', tile_id: 'T_E01_S03', x: 2390.0, z: 5820.0, height_m: 38.0 },
+    saigon_centre_takashimaya: { id: 'saigon_centre_takashimaya', name: 'Saigon Centre (Takashimaya)', tile_id: 'T_E00_S00', x: 186.9, z: 756.3, ground_y: 6.94, plinth_offset: -0.5, height_m: 193.0 },
+    times_square_nguyen_hue: { id: 'times_square_nguyen_hue', name: 'Times Square Nguyễn Huệ', tile_id: 'T_E00_S00', x: 545.0, z: 595.0, ground_y: 4.5, plinth_offset: -0.5, height_m: 165.0 },
+    vinhomes_central_park_cluster: { id: 'vinhomes_central_park_cluster', name: 'Quần thể Vinhomes Central Park', tile_id: 'T_E01_N01', x: 2380.0, z: -1580.0, ground_y: 3.5, plinth_offset: -0.5, height_m: 185.0 },
+    cau_mong_heritage: { id: 'cau_mong_heritage', name: 'Cầu Móng Lịch sử', tile_id: 'T_E00_S01', x: 542.0, z: 1042.0, ground_y: 1.35, plinth_offset: -0.4, height_m: 14.5 },
+    metro_line1_elevated_stations_viaduct: { id: 'metro_line1_elevated_stations_viaduct', name: 'Ga Trên Cao Tuyến Metro Số 1', tile_id: 'T_E02_N01', x: 3180.0, z: -2150.0, ground_y: 3.0, plinth_offset: -0.4, height_m: 22.0 },
+    thuthiem_exhibition_and_tower: { id: 'thuthiem_exhibition_and_tower', name: 'Trung tâm Triển lãm & Tháp Thủ Thiêm', tile_id: 'T_E01_S00', x: 1580.0, z: 620.0, ground_y: 2.5, plinth_offset: -0.4, height_m: 85.0 },
+    crescent_mall_secc_pmh: { id: 'crescent_mall_secc_pmh', name: 'Crescent Mall & SECC Phú Mỹ Hưng', tile_id: 'T_E01_S03', x: 2390.0, z: 5820.0, ground_y: 2.5, plinth_offset: -0.5, height_m: 38.0 },
+    tansonnhhat_airfield_full: { id: 'tansonnhhat_airfield_full', name: 'Cảng Hàng không Quốc tế Tân Sơn Nhất (T1/T2/T3)', tile_id: 'T_W02_N02', x: -4198.7, z: -4485.2, ground_y: 9.55, plinth_offset: -0.2, height_m: 56.4 },
+    cholon_heritage_cluster: { id: 'cholon_heritage_cluster', name: 'Quần thể Di sản Chợ Lớn – Chợ Bình Tây', tile_id: 'T_W02_S01', x: -4562.3, z: 2917.3, ground_y: 8.5, plinth_offset: -0.5, height_m: 118.0 },
+    vanphuc_binhloi_cluster: { id: 'vanphuc_binhloi_cluster', name: 'KĐT Vạn Phúc City – Cầu Bình Lợi – Cầu SG 2', tile_id: 'T_E01_N02', x: 1098.6, z: -4995.0, ground_y: 0.8, plinth_offset: -0.2, height_m: 50.3 },
+    shtp_vnu_thuduc: { id: 'shtp_vnu_thuduc', name: 'Khu Công nghệ cao SHTP & ĐHQG TP.HCM', tile_id: 'T_E06_N05', x: 11060.7, z: -10627.8, ground_y: 21.0, plinth_offset: -0.5, height_m: 57.1 },
+    vinhomes_grandpark: { id: 'vinhomes_grandpark', name: 'Vinhomes Grand Park & Công viên Ánh sáng 36ha', tile_id: 'T_E07_N03', x: 15397.7, z: -6784.6, ground_y: 4.5, plinth_offset: -0.5, height_m: 114.9 },
+    damsen_aeon_west: { id: 'damsen_aeon_west', name: 'Đầm Sen – SVĐ Thống Nhất – Phú Thọ – AEON', tile_id: 'T_W03_S00', x: -5894.6, z: 560.2, ground_y: 7.2, plinth_offset: -0.5, height_m: 60.0 },
+    suoitien_metro_depot: { id: 'suoitien_metro_depot', name: 'KDL Văn hóa Suối Tiên & Depot Long Bình Metro 1', tile_id: 'T_E06_N05', x: 11318.3, z: -9600.5, ground_y: 17.33, plinth_offset: -0.5, height_m: 87.8 },
+    catlai_port_south: { id: 'catlai_port_south', name: 'Cảng Quốc tế Tân Cảng Cát Lái & Khu Nam', tile_id: 'T_E05_S01', x: 10021.6, z: 2354.5, ground_y: 1.4, plinth_offset: -0.2, height_m: 113.2 },
   };
 
   const loadedLandmarks = new Set();
@@ -875,15 +934,9 @@
         gltfLoader.load(
           item.url,
           gltf => {
-            const groundY = (typeof anchor.ground_y === 'number')
-              ? (anchor.ground_y + (anchor.plinth_offset || 0))
-              : (id.startsWith('cau_') ? 0.4 : 1.5);
-            gltf.scene.position.set(anchor.x, groundY, anchor.z);
-            gltf.scene.updateMatrixWorld(true);
-            const lmBox = new THREE.Box3().setFromObject(gltf.scene);
-            if (!id.startsWith('cau_') && !lmBox.isEmpty() && (lmBox.min.y - groundY) > 0.5) {
-              gltf.scene.position.y -= (lmBox.min.y - groundY);
-            }
+            const gy = typeof anchor.ground_y === 'number' ? anchor.ground_y : 4.2;
+            const po = typeof anchor.plinth_offset === 'number' ? anchor.plinth_offset : 0;
+            gltf.scene.position.set(anchor.x, gy + po, anchor.z);
             gltf.scene.traverse(obj => {
               if (obj.isMesh) {
                 obj.castShadow = true;
@@ -899,14 +952,16 @@
           undefined,
           () => { loadedLandmarks.delete(item.name); }
         );
-      }, idx * 85); // Gentle stagger prevents decode spikes
+      }, idx * 105); // Gentle stagger keeps frame times smooth across 31 landmarks
     });
   }
 
   function buildRing1GridAndSat(data) {
     groups.grid.clear();
-    const borderMat = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.32 });
-    const readyMat = new THREE.LineBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.72 });
+    const borderPending = new THREE.LineBasicMaterial({ color: 0x64748b, transparent: true, opacity: 0.25 });
+    const ring1Ready = new THREE.LineBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.65 });
+    const ring2Ready = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.35 });
+    const ring3Ready = new THREE.LineBasicMaterial({ color: 0xa78bfa, transparent: true, opacity: 0.35 });
 
     data.tiles.forEach(tile => {
       const b = tile.bounds;
@@ -918,22 +973,8 @@
         new THREE.Vector3(b.x_min, 2.5, b.z_min),
       ];
       const geo = new THREE.BufferGeometry().setFromPoints(pts);
-      groups.grid.add(new THREE.Line(geo, tile.glb_url ? readyMat : borderMat));
-
-      if (!tile.glb_url && tile.satellite_url && !satTilesLoaded.has(tile.tile_id)) {
-        satTilesLoaded.add(tile.tile_id);
-        texLoader.load(tile.satellite_url, tex => {
-          tex.encoding = THREE.sRGBEncoding;
-          const plane = new THREE.Mesh(
-            new THREE.PlaneGeometry(2000, 2000),
-            new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.45 })
-          );
-          plane.name = 'sat_' + tile.tile_id;
-          plane.rotation.x = -Math.PI / 2;
-          plane.position.set(tile.center_x, 0.2, tile.center_z);
-          groups.satFloor.add(plane);
-        });
-      }
+      const mat = !tile.glb_url ? borderPending : (tile.ring === 'RING_1' ? ring1Ready : (tile.ring === 'RING_3' ? ring3Ready : ring2Ready));
+      groups.grid.add(new THREE.Line(geo, mat));
     });
   }
 
@@ -947,15 +988,12 @@
       const el = document.createElement('div');
       el.className = 'landmark-tag';
       el.textContent = lm.name;
-      el.style.opacity = '0';
-      el.style.pointerEvents = 'none';
       el.addEventListener('click', e => {
         e.stopPropagation();
-        flyTo(lm.x, lm.z, Math.max(380, (lm.height_m || 40) * 4.2), (lm.height_m || 20) * 0.35);
+        flyTo(lm.x, lm.z, Math.max(420, (lm.height_m || 40) * 4.5), (lm.height_m || 20) * 0.35 + (lm.ground_y || 4));
       });
       labelsOverlay.appendChild(el);
-      const estW = Math.max(96, Math.min(280, (lm.name || '').length * 6.6 + 24));
-      return { lm, el, estW, pos: new THREE.Vector3(lm.x, (lm.height_m || 25) + 18, lm.z), visible: false };
+      return { lm, el, pos: new THREE.Vector3(lm.x, (lm.ground_y || 4) + (lm.height_m || 25) + 18, lm.z), visible: false };
     });
   }
 
@@ -968,34 +1006,28 @@
     const w = window.innerWidth;
     const h = window.innerHeight;
     const placedBoxes = [];
-    const maxDist = deviceProfile.isMobile ? 6500 : 9500;
+    const maxDist = deviceProfile.isMobile ? 9500 : 14500;
 
     for (let i = 0; i < labelItems.length; i++) {
       const item = labelItems[i];
       const distCam = camera.position.distanceTo(item.pos);
-      if (distCam > maxDist && (item.lm.height_m || 30) < 120) {
+      if (distCam > maxDist && (item.lm.height_m || 30) < 110) {
         if (item.visible) { item.el.style.opacity = '0'; item.el.style.pointerEvents = 'none'; item.visible = false; }
         continue;
       }
 
       projVec.copy(item.pos).project(camera);
-      if (projVec.z > 1 || projVec.x < -0.96 || projVec.x > 0.96 || projVec.y < -0.94 || projVec.y > 0.92) {
+      if (projVec.z > 1 || projVec.x < -1.05 || projVec.x > 1.05 || projVec.y < -1.05 || projVec.y > 1.05) {
         if (item.visible) { item.el.style.opacity = '0'; item.el.style.pointerEvents = 'none'; item.visible = false; }
         continue;
       }
 
       const sx = (projVec.x * 0.5 + 0.5) * w;
       const sy = (-projVec.y * 0.5 + 0.5) * h;
-      if (sy < 72 || sy > h - 46) {
-        if (item.visible) { item.el.style.opacity = '0'; item.el.style.pointerEvents = 'none'; item.visible = false; }
-        continue;
-      }
 
-      // Smart overlap decluttering using actual estimated label width
       let overlaps = false;
       for (let j = 0; j < placedBoxes.length; j++) {
-        const pb = placedBoxes[j];
-        if (Math.abs(sx - pb.x) < 0.5 * (item.estW + pb.w) + 8 && Math.abs(sy - pb.y) < 28) {
+        if (Math.abs(sx - placedBoxes[j].x) < 92 && Math.abs(sy - placedBoxes[j].y) < 24) {
           overlaps = true;
           break;
         }
@@ -1005,7 +1037,7 @@
         continue;
       }
 
-      placedBoxes.push({ x: sx, y: sy, w: item.estW });
+      placedBoxes.push({ x: sx, y: sy });
       item.el.style.transform = `translate3d(${sx.toFixed(1)}px, ${sy.toFixed(1)}px, 0) translate(-50%, -100%)`;
       if (!item.visible) {
         item.el.style.opacity = '1';
@@ -1015,31 +1047,63 @@
     }
   }
 
+  function updateMinimapHighlight() {
+    const curIx = Math.round(camState.target.x / 2000);
+    const curIz = Math.round(camState.target.z / 2000);
+    document.querySelectorAll('.mini-cell').forEach(c => {
+      const tid = c.dataset.tileId;
+      if (tid) {
+        c.classList.toggle('streamed', loadedTiles.has(tid));
+        c.classList.toggle('current', Number(c.dataset.ix) === curIx && Number(c.dataset.iz) === curIz);
+      }
+    });
+  }
+
   // ==================== 7. UI POPULATION & ADAPTIVE INTERACTIONS ====================
   function populateUI(data) {
-    const s = data.stats;
-    subtitleEl.textContent = `Ring 1: ${s.ready_tiles}/${s.total_ring1_tiles} ô 3D · ${data.landmarks_assets ? data.landmarks_assets.length : 0} công trình biểu tượng`;
-    document.getElementById('minimap-progress').textContent = `${s.ready_tiles}/${s.total_ring1_tiles}`;
-    if (minimapFabCount) minimapFabCount.textContent = `${s.ready_tiles}/${s.total_ring1_tiles}`;
+    const s = data.stats || {};
+    const totalTiles = s.total_tiles || data.tiles.length;
+    const readyTiles = s.ready_tiles || data.tiles.filter(t => t.glb_url).length;
+    const lmCount = data.landmarks_assets ? data.landmarks_assets.length : (data.landmarks || []).length;
+    const areaKm2 = s.total_area_km2 || Math.round(totalTiles * 4);
+
+    subtitleEl.textContent = `${readyTiles}/${totalTiles} ô 3D (${areaKm2} km²) · ${lmCount} biểu tượng`;
+    document.getElementById('minimap-progress').textContent = `${readyTiles}/${totalTiles}`;
+    if (minimapFabCount) minimapFabCount.textContent = `${readyTiles}/${totalTiles}`;
+
+    const gb = data.grid_bounds || { ix_min: -5, ix_max: 7, iz_min: -5, iz_max: 5 };
+    const cols = gb.ix_max - gb.ix_min + 1;
+    const rows = gb.iz_max - gb.iz_min + 1;
+    const miniTitle = document.getElementById('minimap-title');
+    if (miniTitle) miniTitle.textContent = `Lưới ${cols}×${rows} (${areaKm2} km²)`;
+    const listHeading = document.getElementById('tiles-list-heading');
+    if (listHeading) listHeading.textContent = `Danh sách ${totalTiles} ô quy hoạch TP.HCM`;
 
     const gridEl = document.getElementById('minimap-grid');
     gridEl.innerHTML = '';
+    gridEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    gridEl.classList.toggle('dense', cols > 6);
+
     const byCoord = new Map(data.tiles.map(t => [`${t.ix},${t.iz}`, t]));
-    for (let iz = -1; iz <= 3; iz++) {
-      for (let ix = -1; ix <= 3; ix++) {
+    for (let iz = gb.iz_min; iz <= gb.iz_max; iz++) {
+      for (let ix = gb.ix_min; ix <= gb.ix_max; ix++) {
         const t = byCoord.get(`${ix},${iz}`);
         const cell = document.createElement('button');
         cell.type = 'button';
         cell.dataset.ix = ix;
         cell.dataset.iz = iz;
-        cell.className = 'mini-cell ' + (t ? t.status : 'pending');
-        cell.textContent = t ? t.tile_id.replace('T_', '').replace('_', '') : `${ix},${iz}`;
-        cell.title = t ? `${t.tile_id} (${t.status}) — ${t.buildings_gis} công trình` : '';
         if (t) {
+          cell.dataset.tileId = t.tile_id;
+          cell.className = 'mini-cell ' + t.status + (t.ring === 'RING_1' ? ' ring1' : '') + (loadedTiles.has(t.tile_id) ? ' streamed' : '');
+          cell.textContent = cols <= 6 ? t.tile_id.replace('T_', '').replace('_', '') : '';
+          cell.title = `${t.tile_id} [${t.ring || 'RING'}] (${t.buildings_gis || 0} nhà)`;
           cell.addEventListener('click', () => {
-            flyTo(t.center_x, t.center_z, 1550, 14);
+            flyTo(t.center_x, t.center_z, 1750, 14);
             if (deviceProfile.isMobile) minimapCard.classList.remove('mobile-open');
           });
+        } else {
+          cell.className = 'mini-cell empty';
+          cell.disabled = true;
         }
         gridEl.appendChild(cell);
       }
@@ -1047,13 +1111,20 @@
 
     const lmList = document.getElementById('landmarks-list');
     lmList.innerHTML = '';
-    data.landmarks.forEach(lm => {
+    const mergedLms = [...(data.landmarks || [])];
+    const lmIds = new Set(mergedLms.map(l => l.id));
+    Object.values(EXTRA_LANDMARK_ANCHORS).forEach(ex => {
+      if (!lmIds.has(ex.id) && (data.landmarks_assets || []).some(a => a.name.startsWith(ex.id))) {
+        mergedLms.push(ex);
+      }
+    });
+    mergedLms.forEach(lm => {
       const b = document.createElement('button');
       b.type = 'button';
       b.className = 'item-btn';
-      b.innerHTML = `<span>${lm.name}</span><span class="badge ready">${lm.tile_id}</span>`;
+      b.innerHTML = `<span>${lm.name}</span><span class="badge ready">${lm.ring === 'RING_2' ? 'R2' : (lm.tile_id || 'R1')}</span>`;
       b.addEventListener('click', () => {
-        flyTo(lm.x, lm.z, Math.max(420, (lm.height_m || 40) * 4.2), 20);
+        flyTo(lm.x, lm.z, Math.max(460, (lm.height_m || 45) * 4.5), 18);
         if (deviceProfile.isMobile) setPanelOpen(false);
       });
       lmList.appendChild(b);
@@ -1061,15 +1132,20 @@
 
     const tList = document.getElementById('tiles-list');
     tList.innerHTML = '';
-    const sorted = [...data.tiles].sort((a, b) => (a.glb_url ? 0 : 1) - (b.glb_url ? 0 : 1));
+    const sorted = [...data.tiles].sort((a, b) => {
+      const ra = a.ring === 'RING_1' ? 0 : (a.ring === 'RING_2' ? 1 : 2);
+      const rb = b.ring === 'RING_1' ? 0 : (b.ring === 'RING_2' ? 1 : 2);
+      if (ra !== rb) return ra - rb;
+      return (a.glb_url ? 0 : 1) - (b.glb_url ? 0 : 1);
+    });
     sorted.forEach(t => {
       const b = document.createElement('button');
       b.type = 'button';
       b.className = 'item-btn';
-      const label = t.glb_url ? 'Đã có 3D' : (t.status === 'locked' ? 'Đang dựng' : 'Chờ');
-      b.innerHTML = `<span>${t.tile_id} <small class="muted">(${t.buildings_gis} nhà)</small></span><span class="badge ${t.status}">${label}</span>`;
+      const label = t.glb_url ? (t.ring === 'RING_1' ? 'R1 3D' : (t.ring === 'RING_3' ? 'R3 3D' : 'R2 3D')) : (t.status === 'locked' ? 'Đang dựng' : 'Chờ');
+      b.innerHTML = `<span>${t.tile_id} <small class="muted">(${t.buildings_gis || 0} nhà)</small></span><span class="badge ${t.status}">${label}</span>`;
       b.addEventListener('click', () => {
-        flyTo(t.center_x, t.center_z, 1550, 14);
+        flyTo(t.center_x, t.center_z, 1750, 14);
         if (deviceProfile.isMobile) setPanelOpen(false);
       });
       tList.appendChild(b);
@@ -1077,22 +1153,20 @@
   }
 
   function updateStatsUI() {
-    document.getElementById('stat-tiles').textContent = `${loadedTiles.size} / ${worldData ? worldData.tiles.length : 25}`;
+    const readyCount = worldData ? worldData.tiles.filter(t => t.glb_url).length : 0;
+    document.getElementById('stat-tiles').textContent = `${loadedTiles.size} / ${readyCount || 143}`;
     document.getElementById('stat-calls').textContent = renderer.info.render.calls.toLocaleString('vi-VN');
     document.getElementById('stat-tris').textContent = renderer.info.render.triangles.toLocaleString('vi-VN');
   }
 
   async function fetchWorldIndex(force = false) {
-    const isLocalNode = (location.hostname === '127.0.0.1' || location.hostname === 'localhost') && location.port === '3000';
-    if (isLocalNode) {
-      try {
-        const r = await fetch('/api/world-index' + (force ? '?refresh=1' : ''), { cache: 'no-cache' });
-        if (r.ok) return await r.json();
-      } catch (_) {}
+    const r2 = await fetch('./api/world-index.json' + (force ? '?t=' + Date.now() : ''), { cache: 'no-cache' });
+    if (r2.ok) return await r2.json();
+    if (location.hostname === '127.0.0.1' || location.hostname === 'localhost') {
+      const r = await fetch('/api/world-index' + (force ? '?refresh=1' : ''), { cache: 'no-cache' });
+      if (r.ok) return await r.json();
     }
-    const r2 = await fetch('./api/world-index.json?t=' + Date.now(), { cache: 'no-cache' });
-    if (!r2.ok) throw new Error('HTTP ' + r2.status);
-    return await r2.json();
+    throw new Error('HTTP ' + r2.status);
   }
 
   function syncWorldIndex(force = false) {
@@ -1100,29 +1174,23 @@
       .then(data => {
         const firstLoad = !worldData;
         worldData = data;
+        if (data.grid_bounds) {
+          worldBounds.minX = (data.grid_bounds.world_x_min ?? -11000) - 3000;
+          worldBounds.maxX = (data.grid_bounds.world_x_max ?? 15000) + 3000;
+          worldBounds.minZ = (data.grid_bounds.world_z_min ?? -11000) - 3000;
+          worldBounds.maxZ = (data.grid_bounds.world_z_max ?? 11000) + 3000;
+        }
         buildRing1GridAndSat(data);
         populateUI(data);
         if (firstLoad) {
           buildLabels(data.landmarks || []);
           const ready = data.tiles.filter(t => t.glb_url);
-          if (urlCam) {
-            camState.target.set(urlCam.x, 14, urlCam.z);
-            camState.goalTarget.set(urlCam.x, 14, urlCam.z);
-            camState.dist = urlCam.dist;
-            camState.goalDist = urlCam.dist;
-            camState.yaw = urlCam.yaw;
-            camState.goalYaw = urlCam.yaw;
-            camState.pitch = urlCam.pitch;
-            camState.goalPitch = urlCam.pitch;
-            applyCameraTransform();
-          } else if (ready.length > 0) {
+          if (ready.length > 0) {
             const first = ready.find(t => t.tile_id === 'T_E00_S00') || ready[0];
             flyTo(first.center_x, first.center_z, deviceProfile.isMobile ? 1950 : 1680, 20);
           }
         }
-        data.tiles.forEach(t => {
-          if (t.glb_url) enqueueTileLoad(t);
-        });
+        updateDynamicStreaming();
         loadLandmarksAssets(data);
         updateStatsUI();
       })
@@ -1154,9 +1222,6 @@
 
     scene.background.copy(sky);
     scene.fog.color.copy(sky);
-    if (typeof horizonMat !== 'undefined') {
-      horizonMat.color.setHex(0x889484).lerp(sky, 0.35);
-    }
     sunLight.intensity = 0.22 + dayFactor * 1.78;
     hemiLight.intensity = 0.34 + dayFactor * 0.56;
     sunLight.color.setHSL(0.08 + dayFactor * 0.04, 0.7 - dayFactor * 0.55, 0.65 + dayFactor * 0.3);
@@ -1401,7 +1466,7 @@
       camState.goalTarget.z += (fz * moveFwd + rz * moveRight) * spd;
 
       if (keysDown.has('e') || virtualJoy.vert < 0) camState.goalDist = Math.max(38, camState.goalDist - spd * 0.85);
-      if (keysDown.has('q') || virtualJoy.vert > 0) camState.goalDist = Math.min(14500, camState.goalDist + spd * 0.85);
+      if (keysDown.has('q') || virtualJoy.vert > 0) camState.goalDist = Math.min(26000, camState.goalDist + spd * 0.85);
       clampTargetBounds(camState.goalTarget);
     }
 
@@ -1429,18 +1494,12 @@
     updateLabelsProjection();
 
     frames++;
-    if (now - lastFpsAt >= 500) {
+    if (now - lastFpsAt >= 450) {
       const fps = Math.round((frames * 1000) / (now - lastFpsAt));
       fpsBadge.textContent = `${fps} FPS`;
       coordsEl.textContent = `X: ${Math.round(camState.target.x)} m · Z: ${Math.round(camState.target.z)} m`;
+      updateDynamicStreaming();
       updateStatsUI();
-
-      // Highlight active minimap cell
-      const curIx = Math.round(camState.target.x / 2000);
-      const curIz = Math.round(camState.target.z / 2000);
-      document.querySelectorAll('.mini-cell').forEach(c => {
-        c.classList.toggle('current', Number(c.dataset.ix) === curIx && Number(c.dataset.iz) === curIz);
-      });
 
       frames = 0;
       lastFpsAt = now;

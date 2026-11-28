@@ -98,13 +98,14 @@ def sync_from_local_drive(drive_root: pathlib.Path) -> dict:
     # Copy GRID_CONTRACT compact copy or keep summary in world-index
     (STATE_DIR / "TASK_BOARD.json").write_text(json.dumps(task_board, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    # 1. Sync Ring 1 tiles (.glb, _scatter_trees.bin, _qa_gate1.json)
-    ring1_files = dedup_dir_files(drive_root / "02_ASSETS_3D" / "ring1_tiles")
+    # 1. Sync Ring 1 + Ring 2 (+ Ring 3 if present) tiles (.glb, _scatter_trees.bin, _qa_gate1.json)
     copied = 0
-    for logical, src in ring1_files.items():
-        if logical.endswith(".glb") or logical.endswith("_scatter_trees.bin") or logical.endswith("_qa_gate1.json"):
-            if copy_if_changed(src, ASSETS_TILES_DIR / logical):
-                copied += 1
+    for ring_folder in ("ring1_tiles", "ring2_tiles", "ring3_tiles"):
+        ring_files = dedup_dir_files(drive_root / "02_ASSETS_3D" / ring_folder)
+        for logical, src in ring_files.items():
+            if logical.endswith(".glb") or logical.endswith("_scatter_trees.bin") or logical.endswith("_qa_gate1.json"):
+                if copy_if_changed(src, ASSETS_TILES_DIR / logical):
+                    copied += 1
 
     # 2. Sync satellite JPGs
     gis_files = dedup_dir_files(drive_root / "01_DATA_REFS" / "gis_tiles")
@@ -147,11 +148,36 @@ def sync_from_local_drive(drive_root: pathlib.Path) -> dict:
                 except Exception:
                     pass
 
+    # 5. Load Ring 2 & Ring 3 contracts if present
+    arch_dir = drive_root / "01_DATA_REFS" / "architecture"
+    r2_path = arch_dir / "GRID_CONTRACT_R2.json"
+    r3_path = arch_dir / "GRID_CONTRACT_R3.json"
+    contract_r2 = json.loads(r2_path.read_text(encoding="utf-8")) if r2_path.exists() else {}
+    contract_r3 = json.loads(r3_path.read_text(encoding="utf-8")) if r3_path.exists() else {}
+
+    ring_summaries: list[tuple[str, dict]] = []
+    seen_tile_ids: set[str] = set()
+    for ring_name, summary_list in [
+        ("RING_1", contract.get("ring1_gis_summary", [])),
+        ("RING_2", contract_r2.get("ring2_summary", [])),
+        ("RING_3", contract_r3.get("ring3_summary", [])),
+    ]:
+        for item in summary_list:
+            tid = item["tile_id"]
+            if tid not in seen_tile_ids:
+                seen_tile_ids.add(tid)
+                ring_summaries.append((ring_name, item))
+
     # Build world-index.json with relative URLs for GitHub Pages + local Node
     tiles_out = []
     ready_count = 0
     locked_count = 0
-    for item in contract.get("ring1_gis_summary", []):
+    ring_counts = {
+        "RING_1": {"total": 0, "ready": 0},
+        "RING_2": {"total": 0, "ready": 0},
+        "RING_3": {"total": 0, "ready": 0},
+    }
+    for ring_name, item in ring_summaries:
         tid = item["tile_id"]
         cx = item["ix"] * 2000.0
         cz = item["iz"] * 2000.0
@@ -160,15 +186,19 @@ def sync_from_local_drive(drive_root: pathlib.Path) -> dict:
         qa_p = ASSETS_TILES_DIR / f"{tid}_qa_gate1.json"
         sat_p = ASSETS_GIS_DIR / f"{tid}_satellite.jpg"
 
+        ring_counts[ring_name]["total"] += 1
         status = "pending"
         worker_id = None
+        lock_keys = [f"TILE_3D_{tid}", f"TILE_3D_R2_{tid}", f"TILE_3D_R3_{tid}"]
+        matched_lock = next((active_locks[k] for k in lock_keys if k in active_locks), None)
         if glb_p.exists():
             status = "ready"
             ready_count += 1
-        elif f"TILE_3D_{tid}" in active_locks:
+            ring_counts[ring_name]["ready"] += 1
+        elif matched_lock is not None:
             status = "locked"
             locked_count += 1
-            worker_id = active_locks[f"TILE_3D_{tid}"].get("worker_id")
+            worker_id = matched_lock.get("worker_id")
 
         qa_obj = None
         if qa_p.exists():
@@ -179,8 +209,10 @@ def sync_from_local_drive(drive_root: pathlib.Path) -> dict:
 
         tiles_out.append({
             "tile_id": tid,
+            "ring": ring_name,
             "ix": item["ix"],
             "iz": item["iz"],
+            "tile_size_m": 2000.0,
             "center_x": cx,
             "center_z": cz,
             "bounds": {
@@ -202,6 +234,41 @@ def sync_from_local_drive(drive_root: pathlib.Path) -> dict:
             "worker_id": worker_id,
         })
 
+    if tiles_out:
+        ix_min = min(t["ix"] for t in tiles_out)
+        ix_max = max(t["ix"] for t in tiles_out)
+        iz_min = min(t["iz"] for t in tiles_out)
+        iz_max = max(t["iz"] for t in tiles_out)
+        grid_bounds = {
+            "ix_min": ix_min,
+            "ix_max": ix_max,
+            "iz_min": iz_min,
+            "iz_max": iz_max,
+            "world_x_min": min(t["bounds"]["x_min"] for t in tiles_out),
+            "world_x_max": max(t["bounds"]["x_max"] for t in tiles_out),
+            "world_z_min": min(t["bounds"]["z_min"] for t in tiles_out),
+            "world_z_max": max(t["bounds"]["z_max"] for t in tiles_out),
+        }
+    else:
+        grid_bounds = {}
+
+    merged_landmarks = []
+    seen_lm_ids: set[str] = set()
+    for ring_name, lm_list in [
+        ("RING_1", contract.get("landmark_world_anchors_ring1", [])),
+        ("RING_2", contract_r2.get("landmark_world_anchors_ring2", [])),
+        ("RING_3", contract_r3.get("landmark_world_anchors_ring3", [])),
+    ]:
+        for lm in lm_list:
+            lm_id = lm.get("id")
+            if lm_id and lm_id in seen_lm_ids:
+                continue
+            if lm_id:
+                seen_lm_ids.add(lm_id)
+            lm_copy = dict(lm)
+            lm_copy.setdefault("ring", ring_name)
+            merged_landmarks.append(lm_copy)
+
     lm_assets = [
         {"name": p.name, "url": f"./assets/landmarks/{p.name}", "size": p.stat().st_size}
         for p in sorted(ASSETS_LANDMARKS_DIR.glob("*.glb"))
@@ -211,19 +278,33 @@ def sync_from_local_drive(drive_root: pathlib.Path) -> dict:
         "project": "HCMC_3D_DIGITAL_TWIN",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "origin": contract.get("coordinate_reference_system", {}),
-        "landmarks": contract.get("landmark_world_anchors_ring1", []),
+        "grid_bounds": grid_bounds,
+        "landmarks": merged_landmarks,
         "landmarks_assets": lm_assets,
         "tiles": tiles_out,
         "stats": {
-            "total_ring1_tiles": len(tiles_out),
+            "total_tiles": len(tiles_out),
+            "total_ring1_tiles": ring_counts["RING_1"]["total"],
+            "ready_ring1_tiles": ring_counts["RING_1"]["ready"],
+            "total_ring2_tiles": ring_counts["RING_2"]["total"],
+            "ready_ring2_tiles": ring_counts["RING_2"]["ready"],
+            "total_ring3_tiles": ring_counts["RING_3"]["total"],
+            "ready_ring3_tiles": ring_counts["RING_3"]["ready"],
             "ready_tiles": ready_count,
             "locked_tiles": locked_count,
+            "total_area_km2": round(len(tiles_out) * 4.0, 1),
+            "landmarks_count": len(merged_landmarks),
             "results_count": sum(1 for k in results_files if k.endswith("_result.json")),
             "total_tasks": len(task_board.get("tasks", [])),
         },
     }
     (API_DIR / "world-index.json").write_text(json.dumps(world_index, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"[sync_from_drive] copied={copied} ready={ready_count}/{len(tiles_out)} locked={locked_count}")
+    print(
+        f"[sync_from_drive] copied={copied} ready={ready_count}/{len(tiles_out)} "
+        f"(R1={ring_counts['RING_1']['ready']}/{ring_counts['RING_1']['total']}, "
+        f"R2={ring_counts['RING_2']['ready']}/{ring_counts['RING_2']['total']}) "
+        f"landmarks={len(merged_landmarks)} assets={len(lm_assets)} locked={locked_count}"
+    )
     return world_index
 
 
@@ -233,10 +314,9 @@ def main():
     parser.add_argument("--push", action="store_true")
     args = parser.parse_args()
 
-    local_candidates = [
-        args.local_drive,
-        r"I:\My Drive\02 JOB\02 WORKING\VIBE CODE\HCMC_3D_DIGITAL_TWIN",
-        r"G:\My Drive\02 JOB\02 WORKING\VIBE CODE\HCMC_3D_DIGITAL_TWIN",
+    local_candidates = [args.local_drive] + [
+        rf"{drv}:\My Drive\02 JOB\02 WORKING\VIBE CODE\HCMC_3D_DIGITAL_TWIN"
+        for drv in ("I", "G", "H", "F", "E", "D")
     ]
     drive_root = None
     for c in local_candidates:
@@ -245,6 +325,7 @@ def main():
             break
 
     if drive_root is not None:
+        print(f"[sync_from_drive] Using Drive root: {drive_root}")
         sync_from_local_drive(drive_root)
     else:
         raise RuntimeError("Drive API remote sync requires GOOGLE_SERVICE_ACCOUNT_JSON or local Drive mount.")

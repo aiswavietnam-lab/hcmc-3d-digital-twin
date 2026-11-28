@@ -2,74 +2,109 @@
   "schema": "HCMC_QA_GATE1_V1",
   "task_id": "TILE_3D_T_W01_S01",
   "tile_id": "T_W01_S01",
-  "worker_id": "swaA3_6f1c",
+  "ring": "RING_1",
+  "band": "band_S01",
+  "worker_id": "swaB1_6b4e",
+  "bounds_m": {
+    "x_min": -3000.0,
+    "x_max": -1000.0,
+    "z_min": 1000.0,
+    "z_max": 3000.0
+  },
   "passed": true,
   "tier1_gate": {
     "passed": true,
-    "glb_size_bytes": 4744528,
+    "glb_size_bytes": 5438756,
     "draw_calls": 8,
-    "building_triangles": 68635,
+    "building_triangles": 61003,
     "max_seam_error_m": 0.0,
-    "scatter_tree_count": 2976
+    "scatter_tree_count": 4260
   },
   "tier2_deep_audit": {
     "passed": true,
+    "glb_size_bytes": 5438756,
+    "glb_size_mb": 5.1868,
+    "glb_sha256": "894fc0fee46750d48765327155055407f939233b26a4cae120a5b12c1c3ad6b1",
+    "draw_calls": 8,
+    "total_triangles": 77119,
+    "building_triangles": 61003,
+    "has_nan_inf": false,
+    "bad_normals": 0,
     "max_seam_diff_m": 0.0,
-    "floating_check_violations": 0,
-    "intrusion_rate_pct": 0.0,
-    "max_y_m": 86.123,
+    "floating_building_violations": 0,
+    "min_slope_seating_depth_m": 0.85,
+    "water_road_intrusion_rate_pct": 0.0,
+    "peak_elevation_msl_m": 81.323,
     "errors": []
   },
-  "geometry_breakdown": {
-    "placed_buildings_count": 4868,
-    "skipped_landmark_buildings": 0,
-    "meshes": {
-      "MESH_01_TERRAIN": {
-        "vertices": 4225,
-        "triangles": 8192,
-        "material": "MAT_01_TERRAIN_SATELLITE"
-      },
-      "MESH_02_WATER": {
-        "vertices": 147,
-        "triangles": 49,
-        "material": "MAT_02_SAIGON_RIVER_WATER"
-      },
-      "MESH_03_ROAD_METRO": {
-        "vertices": 14248,
-        "triangles": 7124,
-        "material": "MAT_03_ROAD_ASPHALT_METRO"
-      },
-      "MESH_04_TUBE_HOUSE": {
-        "vertices": 63355,
-        "triangles": 31773,
-        "material": "MAT_04_TUBE_HOUSE_TERRACOTTA_TIN"
-      },
-      "MESH_05_SHOPHOUSE": {
-        "vertices": 21515,
-        "triangles": 11151,
-        "material": "MAT_05_SHOPHOUSE_COMMERCIAL"
-      },
-      "MESH_06_VILLA": {
-        "vertices": 1161,
-        "triangles": 501,
-        "material": "MAT_06_VILLA_COLONIAL_CREAM"
-      },
-      "MESH_07_APARTMENT": {
-        "vertices": 43960,
-        "triangles": 24718,
-        "material": "MAT_07_APARTMENT_CONCRETE"
-      },
-      "MESH_08_MODERN_TOWER": {
-        "vertices": 880,
-        "triangles": 492,
-        "material": "MAT_08_MODERN_TOWER_CURTAINWALL"
-      }
+  "mesh_breakdown": [
+    {
+      "mesh_name": "MESH_01_TERRAIN",
+      "material": "MAT_01_TERRAIN_SATELLITE",
+      "vertices": 4225,
+      "triangles": 8192
+    },
+    {
+      "mesh_name": "MESH_02_WATER",
+      "material": "MAT_02_SAIGON_RIVER_WATER",
+      "vertices": 56,
+      "triangles": 48
+    },
+    {
+      "mesh_name": "MESH_03_ROAD_METRO",
+      "material": "MAT_03_ROAD_ASPHALT_METRO",
+      "vertices": 9606,
+      "triangles": 7876
+    },
+    {
+      "mesh_name": "MESH_04_TUBE_HOUSE",
+      "material": "MAT_04_TUBE_HOUSE_TERRACOTTA_TIN",
+      "vertices": 61200,
+      "triangles": 30586
+    },
+    {
+      "mesh_name": "MESH_05_SHOPHOUSE",
+      "material": "MAT_05_SHOPHOUSE_COMMERCIAL",
+      "vertices": 19510,
+      "triangles": 9880
+    },
+    {
+      "mesh_name": "MESH_06_VILLA_COLONIAL",
+      "material": "MAT_06_VILLA_COLONIAL_CREAM",
+      "vertices": 1036,
+      "triangles": 444
+    },
+    {
+      "mesh_name": "MESH_07_APARTMENT_CONCRETE",
+      "material": "MAT_07_APARTMENT_CONCRETE",
+      "vertices": 37075,
+      "triangles": 19983
+    },
+    {
+      "mesh_name": "MESH_08_MODERN_TOWER",
+      "material": "MAT_08_MODERN_TOWER_CURTAINWALL",
+      "vertices": 210,
+      "triangles": 110
     }
+  ],
+  "building_archetype_counts": {
+    "tube_house": 3067,
+    "shophouse": 862,
+    "villa_colonial_modern": 34,
+    "old_apartment": 811,
+    "modern_tower": 6
   },
-  "sha256": {
-    "T_W01_S01.glb": "904605977a314863a9e645e3be2c5cfe29a3bb8182dcd3986c71af589665f426",
-    "T_W01_S01_scatter_trees.bin": "e6cf1846a9a1ecdc8f0ffa44ba38bce23fe43c10144a5678db5b7e8cd5c5a82e",
-    "TILE_3D_T_W01_S01_preview.jpg": "85ff6080a441157ca02b1ef6721e1912a720dbc65962b3cc82aff2c1589bd838"
-  },
-  "elapsed_sec": 5.48
+  "scatter_trees": {
+    "magic": "HCMC_TR1",
+    "version": 1,
+    "instance_count": 4260,
+    "size_bytes": 102256,
+    "sha256": "5e91d098e08a1a326d5325fffe841d37b3ad2991157cf4cd990932c3645397e0",
+    "species_breakdown": {
+      "0": 770,
+      "1": 2806,
+      "2": 674,
+      "3": 10
+    }
+  }
 }
